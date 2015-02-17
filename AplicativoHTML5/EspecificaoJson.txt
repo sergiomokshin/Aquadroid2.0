@@ -1,12 +1,14 @@
-{
+dataCB({
 "Auto":"1"
-",Temp":"27.3750000000"
-",Data":"17/2/15"
-,"Hora":"15:54:54"
+,"Temp":"27.3125000000"
+,"Data":"17/2/15"
+,"Hora":"17:27:25"
 ,"S1":1
 ,"S2":0
 ,"S3":0
 ,"S4":0
+,"NivelBaixo":0
+,"NivelAlto":0
 ,"AgeS3HrI":9
 ,"AgeS3HrF":16
 ,"AgeS4HrI":0
@@ -17,4 +19,4 @@
 ,"AgeRGBBLUEHrF":22
 ,"AgeFeed1":10
 ,"AgeFeed2":19
-}
+})

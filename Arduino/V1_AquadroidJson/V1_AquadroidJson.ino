@@ -28,6 +28,8 @@ EthernetServer server(80);
 #define PIN_FEEDER 9
 #define PIN_SAIDA_BUZZ 8
 
+#define PIN_NIVEL_BAIXO 4
+#define PIN_NIVEL_ALTO 7
 
 int MemSaida1 = 1; //Endereço de memoria com conteudo ultimo comando enviado S1
 int MemSaida2 = 2; //Endereço de memoria com conteudo ultimo comando enviado S2
@@ -106,6 +108,9 @@ void setup() {
   pinMode(A2, OUTPUT);
   pinMode(A3, OUTPUT);
   pinMode(PIN_SAIDA_BUZZ, OUTPUT);  
+  
+  pinMode(PIN_NIVEL_BAIXO,INPUT);  
+  pinMode(PIN_NIVEL_ALTO, INPUT);  
   
   //Inicializando placa com valores armazenados na FLASH Memory
   digitalWrite(A0, EEPROM.read(MemSaida1));
@@ -328,6 +333,9 @@ void SendResponse(EthernetClient client) {
   int S2 = digitalRead(A1);
   int S3 = digitalRead(A2);
   int S4 = digitalRead(A3);
+  
+  int NIVEL_BAIXO = digitalRead(PIN_NIVEL_BAIXO);
+  int NIVEL_ALTO = digitalRead(PIN_NIVEL_ALTO);  
 
   int LedR = analogRead(6);
   int LedG = analogRead(5);
@@ -370,6 +378,10 @@ void SendResponse(EthernetClient client) {
   client.println(S3);
   client.print(",\"S4\":");
   client.println(S4);
+  client.print(",\"NivelBaixo\":");
+  client.println(NIVEL_BAIXO);
+  client.print(",\"NivelAlto\":");
+  client.println(NIVEL_ALTO);
 
   client.print(",\"AgeS3HrI\":");
   client.println(ValueSaida3HrI);
