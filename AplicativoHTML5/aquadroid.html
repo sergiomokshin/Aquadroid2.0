@@ -1,20 +1,128 @@
+﻿
+
+
 <HTML>
 	<HEAD>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">   
         <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css' rel='stylesheet'></link>
 		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>		
     </HEAD>
-    <BODY>
+    <BODY>	
 	
-	
-	
-	
-	
+	  <div class="container">
+		<div class="page-header">
+			<h1>Setup Aquadroid</h1>
+		</div>
+		<p class="lead">Página de configurações e envio de comandos Aquadroid 2.0</p>
+		<table class="table table-bordered">
+					<tr>
+						<td width="120px">Modo: </td>
+						<td colspan="2">
+							<label class="radio-inline">
+							  <input type="radio" name="rdModo" id="rdModoA" value="A" Onclick="EnviaComando('?AUTOL')"> Automático
+							</label>
+							<label class="radio-inline">
+							  <input type="radio" name="rdModo" id="rdModoM" value="M" Onclick="EnviaComando('?AUTOD')"> Manual
+							</label>							
+						</td>
+					<tr>
+					<tr>
+						<td>Data: </td>
+						<td colspan="2"><span id="DataHW"></span></td>
+					</tr>
+					<tr>
+						<td>Temperatura: </td>
+						<td colspan="2" ><span id="Temperatura"></span></td>
+					</tr>
+					<tr>
+						<td>Nivel Baixo: </td>
+						<td colspan="2"><span id="NivelBaixo"></span></td>
+					</tr>
+					<tr>
+						<td>Nivel Alto: </td>
+						<td colspan="2"><span id="NivelAlto"></span></td>
+					</tr>
+					<tr>
+						<td>Saída 1</td>
+						<td>		
+							<button type="button" id="S1" class="btn" Onclick="EnviarComandoSaida('S1')">Ligar</button>
+						</td>
+						<td>
+							Agendamento: <span id="AgeS1"></span>
+						</td>
+					</tr>
+					<tr>
+						<td>Saída 2</td>
+						<td>		
+							<button type="button" id="S2" class="btn" Onclick="EnviarComandoSaida('S2')">Ligar</button>
+						</td>
+						<td>
+							Agendamento: <span id="AgeS2"></span>
+						</td>
+					</tr>
+					<tr>
+						<td>Saída 3</td>
+						<td>		
+							<button type="button" id="S3" class="btn" Onclick="EnviarComandoSaida('S3')">Ligar</button>
+						</td>
+						<td>
+							Agendamento: <span id="AgeS3"></span>
+						</td>
+					</tr>
+					<tr>
+						<td>Saída 4</td>
+						<td>		
+							<button type="button" id="S4" class="btn" Onclick="EnviarComandoSaida('S4')">Ligar</button>
+						</td>
+						<td>
+							Agendamento: <span id="AgeS4"></span>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>RGB White</td>
+						<td><span id="White"></span></td>						
+						<td>
+							Agendamento: <span id="AgeRGBWHITE"></span>
+						</td>
+					</tr>
+					<tr>
+						<td>RGB Blue</td>
+						<td><span id="Blue"></span></td>												
+						<td>
+							Agendamento: <span id="AgeRGBBLUE"></span>
+						</td>
+					</tr>
+					<tr>
+						<td>Alimentação</td>
+						<td>			
+						</td>
+						<td>
+							Agendamento: <span id="AgeFeed1"></span>
+						</td>
+					</tr>
+					<tr>
+						<td>Alimentação</td>
+						<td>			
+						</td>
+						<td>
+							Agendamento: <span id="AgeFeed2"></span>
+						</td>
+					</tr>
+					
+				</table>
+	</div>
 	
 	</BODY>
 	
 	<script>
 	var urlServer = 'http://186.220.99.147:8099';
-	
+	//http://192.168.0.99:99/
+	//8090
 	
 	$(document).ready(function() {
 		console.log("Page Ready!");
@@ -39,10 +147,149 @@
 	
 	function BindData(data) {
 		
+		$('#S1').removeClass('btn');
+		$('#S1').removeClass('btn btn-success');
+		$('#S1').removeClass('btn btn-danger');
+		$('#S2').removeClass('btn');
+		$('#S2').removeClass('btn btn-success');
+		$('#S2').removeClass('btn btn-danger');
+		$('#S3').removeClass('btn');
+		$('#S3').removeClass('btn btn-success');
+		$('#S3').removeClass('btn btn-danger');
+		$('#S4').removeClass('btn');
+		$('#S4').removeClass('btn btn-success');
+		$('#S4').removeClass('btn btn-danger');
 		
+		if(data.Auto == 1)
+		{
+			$("#rdModoA").prop("checked", true)		
+		}
+		else
+		{
+			$("#rdModoM").prop("checked", true)		
+		}		
 		
-	       
+				
+		$("#DataHW").text(data.Data + " " + data.Hora);		
+		$("#Temperatura").text(data.Temp);
 		
+		if(data.NivelBaixo == 0){			
+			$("#NivelBaixo").text("OK");
+		}
+		else{
+			$("#NivelBaixo").text("Fora de nível");
+		}
+		
+		if(data.NivelAlto == 0){			
+			$("#NivelAlto").text("OK");
+		}
+		else{
+			$("#NivelAlto").text("Fora de nível");
+		}
+		
+		if(data.S1 == 1)
+		{			
+			$("#S1").html('Ligada');							
+			$('#S1').addClass('btn btn-success');
+		}
+		else
+		{
+			$("#S1").html('Desligada');						
+			$('#S1').addClass('btn btn-danger');
+		}		
+		$("#AgeS1").text("Não Agendado");
+		
+		if(data.S2 == 1)
+		{			
+			$("#S2").html('Ligada');				
+			$('#S2').addClass('btn btn-success');
+		}
+		else
+		{
+			$("#S2").html('Desligada');			
+			$('#S2').addClass('btn btn-danger');
+		}
+		$("#AgeS2").text("Não Agendado");
+		
+		if(data.S3 == 1)
+		{			
+			$("#S3").html('Ligada');				
+			$('#S3').addClass('btn btn-success');
+		}
+		else
+		{
+			$("#S3").html('Desligada');			
+			$('#S3').addClass('btn btn-danger');
+		}
+		$("#AgeS3").text(data.AgeS3HrI + ":00 até " + data.AgeS3HrF + ":00");
+		
+		if(data.S4 == 1)
+		{			
+			$("#S4").html('Ligada');				
+			$('#S4').addClass('btn btn-success');
+		}
+		else
+		{
+			$("#S4").html('Desligada');			
+			$('#S4').addClass('btn btn-danger');
+		}
+		$("#AgeS4").text(data.AgeS4HrI + ":00 até " + data.AgeS4HrF + ":00");
+	
+		if(data.Red == 255 && data.Green == 255 && data.Blue == 255){
+			$("#White").text("Ligado");
+		}
+		else{
+			$("#White").text("Desligado");
+		}
+		
+		if(data.Red == 0 && data.Green == 0 && data.Blue > 0){
+			$("#Blue").text("Ligado");
+		}
+		else{
+			$("#Blue").text("Desligado");
+		}
+		
+		$("#AgeRGBWHITE").text(data.AgeRGBWHITEHrI + ":00 até " + data.AgeRGBWHITEHrF + ":00");
+		
+			
+		
+		$("#AgeRGBBLUE").text(data.AgeRGBBLUEHrI + ":00 até " + data.AgeRGBBLUEHrF + ":00");
+		$("#AgeFeed1").text(data.AgeFeed1 + ":00");
+		$("#AgeFeed2").text(data.AgeFeed2 + ":00");
+	
+	}
+	function EnviarComandoSaida(saida)
+	{
+		
+		var status = $("#" + saida).html();
+		var cmd = "?" + saida;
+		if(status == "Ligada"){
+			cmd += "D";		
+		}
+		else{
+			cmd += "L";		
+		}
+					
+		EnviaComando(cmd);
+		
+	}
+	
+	function EnviaComando(comando) {
+        
+		var urlComando = urlServer + comando;
+		console.log(urlComando);
+		
+		var call = $.ajax({
+			url: urlComando,
+			dataType: 'jsonp',
+			jsonpCallback:'dataCB'})
+		
+			.done(function(data) { 							
+				console.log(data);								
+				BindData(data);
+				console.log("...done!");
+				console.log("");
+			});	
 	}
 
 	</script>	

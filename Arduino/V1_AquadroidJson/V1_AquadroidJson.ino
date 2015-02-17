@@ -35,7 +35,7 @@ int MemSaida1 = 1; //Endereço de memoria com conteudo ultimo comando enviado S1
 int MemSaida2 = 2; //Endereço de memoria com conteudo ultimo comando enviado S2
 int MemSaida3 = 3; //Endereço de memoria com conteudo ultimo comando enviado S3
 int MemSaida4 = 4; //Endereço de memoria com conteudo ultimo comando enviado S4
-int MemAuto   = 5; //Endereço de memoria com conteudo ultimo comando enviado Módulo Automatico
+int MemAuto   = 5; //Endereço de memoria com conteudo ultimo comando enviado modo Automatico/Manual
 
 //Saidas 1 e 2 não permitem agendamento de horario (Bomba e termostato)
 int MemSaida3HrI = 6; //Endereço de memoria com conteudo inicio horario Saida 3
@@ -49,6 +49,9 @@ int MemRGBBLUEHrF = 13; //Endereço de memoria com conteudo fim horario RGB com 
 int MemFEEDHr1 = 14; //Endereço de memoria com conteudo horario primeira alimentação
 int MemFEEDHr2 = 15; //Endereço de memoria com conteudo horario segunda alimentação
 int MemLastFeed = 16; //Endereço de memoria com  horario da ultima alimentação
+int MemRed = 17; //Endereço de memoria com ultimo comando enviado Red
+int MemGreen = 18; //Endereço de memoria com ultimo comando enviado Green
+int MemBlue = 19; //Endereço de memoria com ultimo comando enviado Blue
 
 
 int ValueSaveSaida1 = 0; //Conteudo da memoria com status Saida 1
@@ -67,6 +70,9 @@ int ValueRGBBLUEHrF = 0; //Conteudo de memoria  fim horario RGB com cor Azul
 int ValueFEEDHr1 = 0; //Conteudo de memoria  horario primeira alimentação
 int ValueFEEDHr2 = 0; //Conteudo de memoria  horario segunda alimentação
 int ValueLastFeed = 0; //Conteudo de memoria  horario ultima alimentação
+int ValueRed = 0; //Conteudo de memoria  Red
+int ValueGreen = 0; //Conteudo de memoria  Green
+int ValueBlue = 0; //Conteudo de memoria  Blue
 
 int buzzer = 0;
 
@@ -101,17 +107,21 @@ void setup() {
   EEPROM.write(MemRGBBLUEHrF, 22);//-> RGB Azul desliga 22:00
   EEPROM.write(MemFEEDHr1, 10);//-> Primeira alimentação 10:00
   EEPROM.write(MemFEEDHr2, 19);//-> Segunda alimentação 19:00
-*/
+  EEPROM.write(MemRed, 0);//-> Segunda alimentação 19:00
+  EEPROM.write(MemGreen, 0);//-> Segunda alimentação 19:00
+  EEPROM.write(MemBlue, 0);//-> Segunda alimentação 19:00
+
+  */
 
   pinMode(A0, OUTPUT);
   pinMode(A1, OUTPUT);
   pinMode(A2, OUTPUT);
   pinMode(A3, OUTPUT);
-  pinMode(PIN_SAIDA_BUZZ, OUTPUT);  
-  
-  pinMode(PIN_NIVEL_BAIXO,INPUT);  
-  pinMode(PIN_NIVEL_ALTO, INPUT);  
-  
+  pinMode(PIN_SAIDA_BUZZ, OUTPUT);
+
+  pinMode(PIN_NIVEL_BAIXO, INPUT);
+  pinMode(PIN_NIVEL_ALTO, INPUT);
+
   //Inicializando placa com valores armazenados na FLASH Memory
   digitalWrite(A0, EEPROM.read(MemSaida1));
   digitalWrite(A1, EEPROM.read(MemSaida2));
@@ -129,6 +139,9 @@ void setup() {
   ValueFEEDHr1 = EEPROM.read(MemFEEDHr1);
   ValueFEEDHr2 = EEPROM.read(MemFEEDHr2);
   ValueLastFeed = EEPROM.read(MemLastFeed);
+  ValueRed = EEPROM.read(MemRed);
+  ValueGreen = EEPROM.read(MemGreen);
+  ValueBlue = EEPROM.read(MemBlue);
 
   buzzer = 0;
 
@@ -142,7 +155,7 @@ void setup() {
   year = 15;
   // setDateDs1307(second, minute, hour, dayOfWeek, dayOfMonth, month, year);
 
- BuzzerLiga();
+  BuzzerLiga();
 }
 
 void loop() {
@@ -208,7 +221,7 @@ void WebServer() {
           if (readString.indexOf("?S3D") > 0) {
             digitalWrite(A2, LOW);
             EEPROM.write(MemSaida3, 0);
-            buzzer =2;
+            buzzer = 2;
           }
 
           if (readString.indexOf("?S4L") > 0) {
@@ -223,37 +236,67 @@ void WebServer() {
           }
 
           if (readString.indexOf("?RED") > 0) {
-            analogWrite(PIN_RED, 255);
-            analogWrite(PIN_GREEN, 0);
-            analogWrite(PIN_BLUE, 0);
+            ValueRed = 255;
+            ValueGreen = 0;
+            ValueBlue = 0;
+            analogWrite(PIN_RED, ValueRed);
+            analogWrite(PIN_GREEN, ValueGreen);
+            analogWrite(PIN_BLUE, ValueBlue);
+            EEPROM.write(MemRed, ValueRed);
+            EEPROM.write(MemGreen, ValueGreen);
+            EEPROM.write(MemBlue, ValueBlue);
             buzzer = 1;
           }
 
           if (readString.indexOf("GRE") > 0) {
-            analogWrite(PIN_RED, 0);
-            analogWrite(PIN_GREEN, 255);
-            analogWrite(PIN_BLUE, 0);
+            ValueRed = 0;
+            ValueGreen = 255;
+            ValueBlue = 0;
+            analogWrite(PIN_RED, ValueRed);
+            analogWrite(PIN_GREEN, ValueGreen);
+            analogWrite(PIN_BLUE, ValueBlue);
+            EEPROM.write(MemRed, ValueRed);
+            EEPROM.write(MemGreen, ValueGreen);
+            EEPROM.write(MemBlue, ValueBlue);
             buzzer = 1;
           }
 
           if (readString.indexOf("?BLU") > 0) {
-            analogWrite(PIN_RED, 0);
-            analogWrite(PIN_GREEN, 0);
-            analogWrite(PIN_BLUE, 255);
+            ValueRed = 0;
+            ValueGreen = 0;
+            ValueBlue = 255;
+            analogWrite(PIN_RED, ValueRed);
+            analogWrite(PIN_GREEN, ValueGreen);
+            analogWrite(PIN_BLUE, ValueBlue);
+            EEPROM.write(MemRed, ValueRed);
+            EEPROM.write(MemGreen, ValueGreen);
+            EEPROM.write(MemBlue, ValueBlue);
             buzzer = 1;
           }
 
           if (readString.indexOf("?WHI") > 0) {
-            analogWrite(PIN_RED, 255);
-            analogWrite(PIN_GREEN, 255);
-            analogWrite(PIN_BLUE, 255);
+            ValueRed = 255;
+            ValueGreen = 255;
+            ValueBlue = 255;
+            analogWrite(PIN_RED, ValueRed);
+            analogWrite(PIN_GREEN, ValueGreen);
+            analogWrite(PIN_BLUE, ValueBlue);
+            EEPROM.write(MemRed, ValueRed);
+            EEPROM.write(MemGreen, ValueGreen);
+            EEPROM.write(MemBlue, ValueBlue);
             buzzer = 1;
           }
 
           if (readString.indexOf("?RGBOFF") > 0) {
-            analogWrite(PIN_RED, 0);
-            analogWrite(PIN_GREEN, 0);
-            analogWrite(PIN_BLUE, 0);
+            ValueRed = 0;
+            ValueGreen = 0;
+            ValueBlue = 0;
+            analogWrite(PIN_RED, ValueRed);
+            analogWrite(PIN_GREEN, ValueGreen);
+            analogWrite(PIN_BLUE, ValueBlue);
+            EEPROM.write(MemRed, ValueRed);
+            EEPROM.write(MemGreen, ValueGreen);
+            EEPROM.write(MemBlue, ValueBlue);
             buzzer = 2;
           }
 
@@ -263,52 +306,52 @@ void WebServer() {
           }
 
           if (readString.indexOf("?AgeS3HrI") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") +1, readString.lastIndexOf("|")).toInt();;
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
             EEPROM.write(MemSaida3HrI, cmd);
             ValueSaida3HrI = cmd;
             buzzer = 3;
-          }          
+          }
           if (readString.indexOf("?AgeS3HrF") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") +1, readString.lastIndexOf("|")).toInt();;
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
             EEPROM.write(MemSaida3HrF, cmd);
             ValueSaida3HrF = cmd;
             buzzer = 3;
           }
 
           if (readString.indexOf("?AgeS4HrI") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") +1, readString.lastIndexOf("|")).toInt();;
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
             EEPROM.write(MemSaida4HrI, cmd);
             ValueSaida4HrI = cmd;
             buzzer = 3;
-          }          
+          }
           if (readString.indexOf("?AgeS4HrF") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") +1, readString.lastIndexOf("|")).toInt();;
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
             EEPROM.write(MemSaida4HrF, cmd);
             ValueSaida4HrF = cmd;
             buzzer = 3;
           }
 
           if (readString.indexOf("?AgeRGBWHITEHrI") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") +1, readString.lastIndexOf("|")).toInt();;
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
             EEPROM.write(MemRGBWHITEHrI, cmd);
             ValueRGBWHITEHrI = cmd;
             buzzer = 3;
           }
           if (readString.indexOf("?AgeRGBWHITEHrF") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") +1, readString.lastIndexOf("|")).toInt();;
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
             EEPROM.write(MemRGBWHITEHrF, cmd);
             ValueRGBWHITEHrF = cmd;
             buzzer = 3;
           }
-          
+
           if (readString.indexOf("?AgeRGBBLUEHrI") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") +1, readString.lastIndexOf("|")).toInt();;
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
             EEPROM.write(MemRGBBLUEHrI, cmd);
             ValueRGBBLUEHrI = cmd;
             buzzer = 3;
           }
           if (readString.indexOf("?AgeRGBBLUEHrF") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") +1, readString.lastIndexOf("|")).toInt();;
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
             EEPROM.write(MemRGBBLUEHrF, cmd);
             ValueRGBBLUEHrF = cmd;
             buzzer = 3;
@@ -333,9 +376,9 @@ void SendResponse(EthernetClient client) {
   int S2 = digitalRead(A1);
   int S3 = digitalRead(A2);
   int S4 = digitalRead(A3);
-  
+
   int NIVEL_BAIXO = digitalRead(PIN_NIVEL_BAIXO);
-  int NIVEL_ALTO = digitalRead(PIN_NIVEL_ALTO);  
+  int NIVEL_ALTO = digitalRead(PIN_NIVEL_ALTO);
 
   int LedR = analogRead(6);
   int LedG = analogRead(5);
@@ -406,6 +449,14 @@ void SendResponse(EthernetClient client) {
   client.print(",\"AgeFeed2\":");
   client.println(ValueFEEDHr2);
 
+  client.print(",\"Red\":");
+  client.println(ValueRed);
+  client.print(",\"Green\":");
+  client.println(ValueGreen);
+  client.print(",\"Blue\":");
+  client.println(ValueBlue);
+
+
   client.println(F("})"));
   client.println();
 
@@ -443,28 +494,48 @@ void ModoAuto() {
     //RGB
     if (ValueRGBWHITEHrI >= hour && ValueRGBWHITEHrF <= hour)
     {
-      analogWrite(PIN_RED, 255);
-      analogWrite(PIN_GREEN, 255);
-      analogWrite(PIN_BLUE, 255);
+      ValueRed = 255;
+      ValueGreen = 255;
+      ValueBlue = 255;
+      analogWrite(PIN_RED, ValueRed);
+      analogWrite(PIN_GREEN, ValueGreen);
+      analogWrite(PIN_BLUE, ValueBlue);
+      EEPROM.write(MemRed, ValueRed);
+      EEPROM.write(MemGreen, ValueGreen);
+      EEPROM.write(MemBlue, ValueBlue);
     }
-    else if (ValueRGBWHITEHrI >= hour && ValueRGBWHITEHrF <= hour)
+    else if (ValueRGBBLUEHrI >= hour && ValueRGBBLUEHrF <= hour)
     {
-      analogWrite(PIN_RED, 0);
-      analogWrite(PIN_GREEN, 0);
-      if (ValueRGBWHITEHrF == hour) // Mais escuro na ultima hora do agendamento azul
+      ValueRed = 0;
+      ValueBlue = 0;
+      if (ValueRGBBLUEHrF == hour) // Mais escuro na ultima hora do agendamento azul
       {
-        analogWrite(PIN_BLUE, 80);
+        ValueGreen = 80;
       }
       else
       {
-        analogWrite(PIN_BLUE, 255);
+        ValueGreen = 255;
       }
+
+      analogWrite(PIN_RED, ValueRed);
+      analogWrite(PIN_GREEN, ValueGreen);
+      analogWrite(PIN_BLUE, ValueBlue);
+      EEPROM.write(MemRed, ValueRed);
+      EEPROM.write(MemGreen, ValueGreen);
+      EEPROM.write(MemBlue, ValueBlue);
+
     }
     else
     {
-      analogWrite(PIN_RED, 0);
-      analogWrite(PIN_GREEN, 0);
-      analogWrite(PIN_BLUE, 0);
+      ValueRed = 0;
+      ValueGreen = 0;
+      ValueBlue = 0;
+      analogWrite(PIN_RED, ValueRed);
+      analogWrite(PIN_GREEN, ValueGreen);
+      analogWrite(PIN_BLUE, ValueBlue);
+      EEPROM.write(MemRed, ValueRed);
+      EEPROM.write(MemGreen, ValueGreen);
+      EEPROM.write(MemBlue, ValueBlue);
     }
 
     ValueLastFeed = EEPROM.read(MemLastFeed);
@@ -618,45 +689,45 @@ void setDateDs1307(byte second,        // 0-59
 
 void Buzzer()
 {
-  if(buzzer ==1)
+  if (buzzer == 1)
   {
     BuzzerLiga();
-  }  
-  else if(buzzer ==2)
+  }
+  else if (buzzer == 2)
   {
     BuzzerDesliga();
-  }  
-  else if(buzzer ==3)
+  }
+  else if (buzzer == 3)
   {
     BuzzerAgenda();
-  }  
+  }
   buzzer = 0;
 }
 
 void BuzzerLiga()
 {
-  buzz(PIN_SAIDA_BUZZ, 3000, 50);        
-  buzz(PIN_SAIDA_BUZZ, 2500, 30);        
-  buzz(PIN_SAIDA_BUZZ, 3500, 250);        
+  buzz(PIN_SAIDA_BUZZ, 3000, 50);
+  buzz(PIN_SAIDA_BUZZ, 2500, 30);
+  buzz(PIN_SAIDA_BUZZ, 3500, 250);
 }
 
 void BuzzerAgenda()
 {
-  buzz(PIN_SAIDA_BUZZ, 3500, 100);    
+  buzz(PIN_SAIDA_BUZZ, 3500, 100);
 }
 
 void BuzzerDesliga()
 {
-  buzz(PIN_SAIDA_BUZZ, 3500, 500);        
+  buzz(PIN_SAIDA_BUZZ, 3500, 500);
 }
 
 void buzz(int targetPin, long frequency, long length) {
-  long delayValue = 1000000/frequency/2;
-  long numCycles = frequency * length/ 1000;
- for (long i=0; i < numCycles; i++){
-    digitalWrite(targetPin,HIGH);
+  long delayValue = 1000000 / frequency / 2;
+  long numCycles = frequency * length / 1000;
+  for (long i = 0; i < numCycles; i++) {
+    digitalWrite(targetPin, HIGH);
     delayMicroseconds(delayValue);
-    digitalWrite(targetPin,LOW);
+    digitalWrite(targetPin, LOW);
     delayMicroseconds(delayValue);
   }
 }
