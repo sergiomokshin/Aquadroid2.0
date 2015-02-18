@@ -78,7 +78,8 @@ int buzzer = 0;
 
 String readString;
 byte second, minute, hour, dayOfWeek, dayOfMonth, month, year;
-float celsius;
+int celsius;
+int PH;
 
 void setup() {
 
@@ -161,6 +162,7 @@ void setup() {
 void loop() {
   getDateDs1307(&second, &minute, &hour, &dayOfWeek, &dayOfMonth, &month, &year);
   GetTemp();
+  GetPH();  
   WebServer();
   ModoAuto();
   Buzzer();
@@ -303,59 +305,67 @@ void WebServer() {
           if (readString.indexOf("?FEE") > 0) {
             Alimenta();
             buzzer = 1;
-          }
-
+          }          
+          
           if (readString.indexOf("?AgeS3HrI") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
+           
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();
             EEPROM.write(MemSaida3HrI, cmd);
             ValueSaida3HrI = cmd;
-            buzzer = 3;
-          }
-          if (readString.indexOf("?AgeS3HrF") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
+
+            cmd = readString.substring(readString.indexOf("]") + 1, readString.lastIndexOf("]")).toInt();
             EEPROM.write(MemSaida3HrF, cmd);
             ValueSaida3HrF = cmd;
             buzzer = 3;
           }
-
-          if (readString.indexOf("?AgeS4HrI") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
+           if (readString.indexOf("?AgeS4HrI") > 0) {
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();
             EEPROM.write(MemSaida4HrI, cmd);
             ValueSaida4HrI = cmd;
-            buzzer = 3;
-          }
-          if (readString.indexOf("?AgeS4HrF") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
+
+            cmd = readString.substring(readString.indexOf("]") + 1, readString.lastIndexOf("]")).toInt();
             EEPROM.write(MemSaida4HrF, cmd);
             ValueSaida4HrF = cmd;
             buzzer = 3;
           }
+        
 
           if (readString.indexOf("?AgeRGBWHITEHrI") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();
             EEPROM.write(MemRGBWHITEHrI, cmd);
             ValueRGBWHITEHrI = cmd;
-            buzzer = 3;
-          }
-          if (readString.indexOf("?AgeRGBWHITEHrF") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
+            
+            cmd = readString.substring(readString.indexOf("]") + 1, readString.lastIndexOf("]")).toInt();
             EEPROM.write(MemRGBWHITEHrF, cmd);
-            ValueRGBWHITEHrF = cmd;
+            ValueRGBWHITEHrF = cmd;            
             buzzer = 3;
           }
 
           if (readString.indexOf("?AgeRGBBLUEHrI") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();
             EEPROM.write(MemRGBBLUEHrI, cmd);
             ValueRGBBLUEHrI = cmd;
-            buzzer = 3;
-          }
-          if (readString.indexOf("?AgeRGBBLUEHrF") > 0) {
-            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();;
+            
+            cmd = readString.substring(readString.indexOf("]") + 1, readString.lastIndexOf("]")).toInt();
             EEPROM.write(MemRGBBLUEHrF, cmd);
             ValueRGBBLUEHrF = cmd;
             buzzer = 3;
           }
+          
+          if (readString.indexOf("?AgeFeed1") > 0) {
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();
+            EEPROM.write(MemFEEDHr1, cmd);
+            ValueFEEDHr1 = cmd;
+            buzzer = 3;
+          }
+          
+          if (readString.indexOf("?AgeFeed2") > 0) {
+            int cmd = readString.substring(readString.indexOf("|") + 1, readString.lastIndexOf("|")).toInt();
+            EEPROM.write(MemFEEDHr2, cmd);
+            ValueFEEDHr2 = cmd;
+            buzzer = 3;
+          }
+          
 
           SendResponse(client);
           delay(1);
@@ -377,8 +387,8 @@ void SendResponse(EthernetClient client) {
   int S3 = digitalRead(A2);
   int S4 = digitalRead(A3);
 
-  int NIVEL_BAIXO = digitalRead(PIN_NIVEL_BAIXO);
-  int NIVEL_ALTO = digitalRead(PIN_NIVEL_ALTO);
+  int NIVEL_BAIXO = 0;// digitalRead(PIN_NIVEL_BAIXO);
+  int NIVEL_ALTO = 0;//digitalRead(PIN_NIVEL_ALTO);
 
   int LedR = analogRead(6);
   int LedG = analogRead(5);
@@ -396,6 +406,10 @@ void SendResponse(EthernetClient client) {
 
   client.print(",\"Temp\":\"");
   client.print(celsius, DEC);
+  client.println("\"");
+
+  client.print(",\"PH\":\"");
+  client.print(PH, DEC);
   client.println("\"");
 
   client.print(",\"Data\":\"");
@@ -468,7 +482,7 @@ void ModoAuto() {
   if (ValueSaveAuto == 1)
   {
     //Saida 3
-    if (ValueSaida3HrI >= hour && ValueSaida3HrF <= hour)
+    if (ValueSaida3HrI <= hour && ValueSaida3HrF >= hour)
     {
       digitalWrite(A2, HIGH);
       EEPROM.write(MemSaida3, 1);
@@ -480,7 +494,7 @@ void ModoAuto() {
     }
 
     //Saida 4
-    if (ValueSaida4HrI >= hour && ValueSaida4HrF <= hour)
+    if (ValueSaida4HrI <= hour && ValueSaida4HrF >= hour)
     {
       digitalWrite(A3, HIGH);
       EEPROM.write(MemSaida4, 1);
@@ -492,7 +506,7 @@ void ModoAuto() {
     }
 
     //RGB
-    if (ValueRGBWHITEHrI >= hour && ValueRGBWHITEHrF <= hour)
+    if (ValueRGBWHITEHrI <= hour && ValueRGBWHITEHrF >= hour)
     {
       ValueRed = 255;
       ValueGreen = 255;
@@ -504,17 +518,17 @@ void ModoAuto() {
       EEPROM.write(MemGreen, ValueGreen);
       EEPROM.write(MemBlue, ValueBlue);
     }
-    else if (ValueRGBBLUEHrI >= hour && ValueRGBBLUEHrF <= hour)
+    else if (ValueRGBBLUEHrI <= hour && ValueRGBBLUEHrF >= hour)
     {
       ValueRed = 0;
-      ValueBlue = 0;
+      ValueGreen = 0;
       if (ValueRGBBLUEHrF == hour) // Mais escuro na ultima hora do agendamento azul
       {
-        ValueGreen = 80;
+        ValueBlue = 80;
       }
       else
       {
-        ValueGreen = 255;
+        ValueBlue = 255;
       }
 
       analogWrite(PIN_RED, ValueRed);
@@ -730,6 +744,10 @@ void buzz(int targetPin, long frequency, long length) {
     digitalWrite(targetPin, LOW);
     delayMicroseconds(delayValue);
   }
+}
+
+void GetPH(){
+    PH = 7;
 }
 
 

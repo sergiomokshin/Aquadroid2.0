@@ -42,6 +42,10 @@
 						<td><span id="Temperatura"></span></td>
 					</tr>
 					<tr>
+						<td>PH: </td>
+						<td><span id="PH"></span></td>
+					</tr>
+					<tr>
 						<td>Nivel Baixo: </td>
 						<td><span id="NivelBaixo"></span></td>
 					</tr>
@@ -220,7 +224,7 @@
 		  <form class="form-inline">
 			  <div class="form-group">
 				<label for="hrHorario">Horário</label>					
-				<input type="number" class="form-control" id="hrInicio" min="0" max="23" step="1">					
+				<input type="number" class="form-control" id="hrHorario" min="0" max="23" step="1">					
 				<label for="hrInicio2">:00</label>					
 			  </div>			  
 			</form>		          	
@@ -310,6 +314,9 @@
 				
 		$("#DataHW").text(data.Data + " " + data.Hora);		
 		$("#Temperatura").text(data.Temp);
+		$("#PH").text(data.PH);
+		
+		console.log(data.NivelBaixo);
 		
 		if(data.NivelBaixo == 0){			
 			$("#NivelBaixo").text("OK");
@@ -318,6 +325,7 @@
 			$("#NivelBaixo").text("Fora de nivel");
 		}
 		
+		console.log(data.NivelAlto);
 		if(data.NivelAlto == 0){			
 			$("#NivelAlto").text("OK");
 		}
@@ -371,25 +379,46 @@
 		}
 		$("#AgeS4").text(data.AgeS4HrI + ":00 ate " + data.AgeS4HrF + ":00");
 		
-		$("#WHI").text("Desligado");
-		$("#BLU").text("Desligado");
-		$("#RED").text("Desligado");
-		$("#GRE").text("Desligado");
+			
 		
 		if(data.Red == 255 && data.Green == 255 && data.Blue == 255){
 			$("#WHI").text("Ligado");
+			$('#WHI').addClass('btn btn-success');
+		}
+		else
+		{
+			$("#WHI").text("Desligado");
+			$('#WHI').addClass('btn btn-danger');
 		}
 		
 		if(data.Red == 0 && data.Green == 0 && data.Blue > 0){
 			$("#BLU").text("Ligado");
+			$('#BLU').addClass('btn btn-success');
+		}
+		else
+		{
+			$("#BLU").text("Desligado");
+			$('#BLU').addClass('btn btn-danger');
 		}
 		
 		if(data.Red > 0 && data.Green == 0 && data.Blue == 0){
 			$("#RED").text("Ligado");
+			$('#RED').addClass('btn btn-success');
+		}
+		else
+		{
+			$("#RED").text("Desligado");
+			$('#RED').addClass('btn btn-danger');
 		}
 		
 		if(data.Red == 0 && data.Green > 0 && data.Blue == 0){
 			$("#GRE").text("Ligado");
+			$('#GRE').addClass('btn btn-success');
+		}
+		else
+		{
+			$("#GRE").text("Desligado");
+			$('#GRE').addClass('btn btn-danger');
 		}
 		
 		$("#AgeRGBWHITE").text(data.AgeRGBWHITEHrI + ":00 ate " + data.AgeRGBWHITEHrF + ":00");					
@@ -475,72 +504,73 @@
 	
 	function MostraPopUpPeriodo(acao)
 	{
-		$('#modalPeriodo').modal('show')
+		$('#modalPeriodo').modal('show')		
 		
 		if(acao == "S3")
 		{
 			tipoAgendamento= "?AgeS3Hr";
 			$("#modalPeriodoTitle").text("Agendamento Saida 3");			 
-			$("#hrInicio").text(dadosRecebidos.AgeS3HrI);
-			$("#hrFim").text(dadosRecebidos.AgeS3HrF);			
+			$("#hrInicio").val(dadosRecebidos.AgeS3HrI);
+			$("#hrFim").val(dadosRecebidos.AgeS3HrF);			
 		}
 		else if(acao == "S4")
 		{
 			tipoAgendamento= "?AgeS4Hr";
 			$("#modalPeriodoTitle").text("Agendamento Saida 4");
-			$("#hrInicio").text(dadosRecebidos.AgeS4HrI);
-			$("#hrFim").text(dadosRecebidos.AgeS4HrF);			
+			$("#hrInicio").val(dadosRecebidos.AgeS4HrI);
+			$("#hrFim").val(dadosRecebidos.AgeS4HrF);			
 		}
 		else if(acao == "WHI")
 		{				
 			tipoAgendamento= "?AgeRGBWHITEHr";
 			$("#modalPeriodoTitle").text("Agendamento Saida RGB - White");
-			$("#hrInicio").text(dadosRecebidos.AgeRGBWHITEHrI);
-			$("#hrFim").text(dadosRecebidos.AgeRGBWHITEHrF);			
+			$("#hrInicio").val(dadosRecebidos.AgeRGBWHITEHrI);
+			$("#hrFim").val(dadosRecebidos.AgeRGBWHITEHrF);			
 		}
 		else if(acao == "BLU")
 		{
 			tipoAgendamento= "?AgeRGBBLUEHr";
 			$("#modalPeriodoTitle").text("Agendamento Saida RGB - Blue");
-			$("#hrInicio").text(dadosRecebidos.AgeRGBBLUEHrI);
-			$("#hrFim").text(dadosRecebidos.AgeRGBBLUEHrF);			
+			$("#hrInicio").val(dadosRecebidos.AgeRGBBLUEHrI);
+			$("#hrFim").val(dadosRecebidos.AgeRGBBLUEHrF);			
 		}		
 	}
 	
 	function AlterarPeriodo()
 	{
 		var horaInicio = $("#hrInicio").val();	
-		var cmdIni = tipoAgendamento =  "I" + "|" + horaInicio + "|";		
-		EnviaComando(cmdIni);
-		
 		var horaFim = $("#hrFim").val();	
-		var cmdFim = tipoAgendamento =  "F" + "|" + horaFim + "|";		
-		EnviaComando(cmdFim);
-					
+		var cmdIni = tipoAgendamento +  "I" + "|" + horaInicio + "|" + tipoAgendamento +  "F" + "]" + horaFim + "]";
+		EnviaComando(cmdIni);
+											
+		BuscaDados();
+		
+		$('#modalPeriodo').modal('hide')		
 	}	
 	
 	function MostraPopUpHorario(acao)
 	{
-		$('#modalHorario').modal('show')			
+		$('#modalHorario').modal('show')						
 		if(acao == "FEE1")
 		{
 			tipoAgendamento= "?AgeFeed1";
 			$("#modalHorarioTitle").text("Agendamento Alimentacao 1");			 
-			$("#hrHorario").text(dadosRecebidos.AgeFeed1);			
+			$("#hrHorario").val(dadosRecebidos.AgeFeed1);			
 		}
-		else if(acao == "FEE1")
+		else if(acao == "FEE2")
 		{
 			tipoAgendamento= "?AgeFeed2";
 			$("#modalHorarioTitle").text("Agendamento Alimentacao 2");
-			$("#hrHorario").text(dadosRecebidos.AgeFeed2);			
+			$("#hrHorario").val(dadosRecebidos.AgeFeed2);			
 		}		
 	}
 	
 	function AlterarHorario()
 	{
 		var hora  = $("#hrHorario").val();	
-		var cmdHr = tipoAgendamento =  + "|" + hora + "|";		
-		EnviaComando(cmdHr);					
+		var cmdHr = tipoAgendamento + "|" + hora + "|";		
+		EnviaComando(cmdHr);
+		$('#modalHorario').modal('hide')		
 	}
 	
 	</script>	
