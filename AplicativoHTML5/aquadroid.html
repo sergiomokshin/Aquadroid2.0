@@ -1,6 +1,3 @@
-﻿
-
-
 <HTML>
 	<HEAD>
 		<meta charset="utf-8">
@@ -8,8 +5,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="">
 		<meta name="author" content="">   
-        <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css' rel='stylesheet'></link>
-		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>		
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>		
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+       <style> 	
+		
+	   </style>
     </HEAD>
     <BODY>	
 	
@@ -17,13 +20,13 @@
 		<div class="page-header">
 			<h1>Setup Aquadroid</h1>
 		</div>
-		<p class="lead">Página de configurações e envio de comandos Aquadroid 2.0</p>
+		<p class="lead">Pagina de configuracoes e envio de comandos Aquadroid 2.0</p>
 		<table class="table table-bordered">
 					<tr>
 						<td width="120px">Modo: </td>
-						<td colspan="2">
+						<td>
 							<label class="radio-inline">
-							  <input type="radio" name="rdModo" id="rdModoA" value="A" Onclick="EnviaComando('?AUTOL')"> Automático
+							  <input type="radio" name="rdModo" id="rdModoA" value="A" Onclick="EnviaComando('?AUTOL')"> Automatico
 							</label>
 							<label class="radio-inline">
 							  <input type="radio" name="rdModo" id="rdModoM" value="M" Onclick="EnviaComando('?AUTOD')"> Manual
@@ -32,52 +35,67 @@
 					<tr>
 					<tr>
 						<td>Data: </td>
-						<td colspan="2"><span id="DataHW"></span></td>
+						<td><span id="DataHW"></span></td>
 					</tr>
 					<tr>
 						<td>Temperatura: </td>
-						<td colspan="2" ><span id="Temperatura"></span></td>
+						<td><span id="Temperatura"></span></td>
 					</tr>
 					<tr>
 						<td>Nivel Baixo: </td>
-						<td colspan="2"><span id="NivelBaixo"></span></td>
+						<td><span id="NivelBaixo"></span></td>
 					</tr>
 					<tr>
 						<td>Nivel Alto: </td>
-						<td colspan="2"><span id="NivelAlto"></span></td>
+						<td><span id="NivelAlto"></span></td>
+					</tr>
+		</table>
+		<table class="table table-bordered">
+					<tr>
+						<th width="120px">Função</th>
+						<th>Ação</th>
+						<th colspan="2">Agendamento</th>
 					</tr>
 					<tr>
-						<td>Saída 1</td>
-						<td>		
+						<td>Saida 1</td>
+						<td width="150px">		
 							<button type="button" id="S1" class="btn" Onclick="EnviarComandoSaida('S1')">Ligar</button>
 						</td>
-						<td>
-							Agendamento: <span id="AgeS1"></span>
+						<td colspan="2">
 						</td>
 					</tr>
 					<tr>
-						<td>Saída 2</td>
+						<td>Saida 2</td>
 						<td>		
 							<button type="button" id="S2" class="btn" Onclick="EnviarComandoSaida('S2')">Ligar</button>
 						</td>
-						<td>
-							Agendamento: <span id="AgeS2"></span>
+						<td colspan="2">
 						</td>
 					</tr>
 					<tr>
-						<td>Saída 3</td>
+						<td>Saida 3</td>
 						<td>		
-							<button type="button" id="S3" class="btn" Onclick="EnviarComandoSaida('S3')">Ligar</button>
+							<button type="button" id="S3" class="btn btn-danger" Onclick="EnviarComandoSaida('S3')">Ligar</button>
 						</td>
+						<td width="50px">
+							<button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeS3" Onclick="MostraPopUpPeriodo('S3')">
+							  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+							</button>													
+						</td>	
 						<td>
 							Agendamento: <span id="AgeS3"></span>
 						</td>
 					</tr>
 					<tr>
-						<td>Saída 4</td>
+						<td>Saida 4</td>
 						<td>		
 							<button type="button" id="S4" class="btn" Onclick="EnviarComandoSaida('S4')">Ligar</button>
 						</td>
+						<td>	
+							<button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeS4" Onclick="MostraPopUpPeriodo('S4')">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+							</button>													
+						</td>	
 						<td>
 							Agendamento: <span id="AgeS4"></span>
 						</td>
@@ -85,30 +103,74 @@
 					
 					<tr>
 						<td>RGB White</td>
-						<td><span id="White"></span></td>						
+						<td>
+							<button type="button" id="WHI" class="btn" Onclick="EnviarComandoRGB('WHI')">Ligar</button>
+						</td>
+						<td>	
+							<button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeWHI" Onclick="MostraPopUpPeriodo('WHI')">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+							</button>													
+						</td>							
 						<td>
 							Agendamento: <span id="AgeRGBWHITE"></span>
 						</td>
 					</tr>
 					<tr>
 						<td>RGB Blue</td>
-						<td><span id="Blue"></span></td>												
+						<td>
+							<button type="button" id="BLU" class="btn" Onclick="EnviarComandoRGB('BLU')">Ligar</button>
+						</td>
+						<td>	
+							<button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeBLU" Onclick="MostraPopUpPeriodo('BLU')">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+							</button>													
+						</td>							
 						<td>
 							Agendamento: <span id="AgeRGBBLUE"></span>
 						</td>
 					</tr>
 					<tr>
-						<td>Alimentação</td>
-						<td>			
+						<td>RGB Green</td>
+						<td>
+							<button type="button" id="GRE" class="btn" Onclick="EnviarComandoRGB('GRE')">Ligar</button>
 						</td>
+						<td colspan="2">
+							
+						</td>
+					</tr>
+					<tr>
+						<td>RGB RED</td>
+						<td>
+							<button type="button" id="RED" class="btn" Onclick="EnviarComandoRGB('RED')">Ligar</button>
+						</td>
+						<td colspan="2">
+							
+						</td>
+					</tr>
+					<tr>
+						<td>Alimentacao 1</td>
+						<td>	
+							<button type="button" id="Alimenta1" class="btn btn-warning" Onclick="EnviaComando('?FEE1')">Alimentar</button>												
+						</td>
+						<td>	
+							<button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeFEE1" Onclick="MostraPopUpHorario('FEE1')">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+							</button>													
+						</td>							
 						<td>
 							Agendamento: <span id="AgeFeed1"></span>
 						</td>
 					</tr>
 					<tr>
-						<td>Alimentação</td>
-						<td>			
+						<td>Alimentacao 2</td>
+						<td>
+							<button type="button" id="Alimenta2" class="btn btn-warning" Onclick="EnviaComando('?FEE')">Alimentar</button>																		
 						</td>
+						<td>	
+							<button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeFEE2" Onclick="MostraPopUpHorario('FEE2')">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+							</button>													
+						</td>							
 						<td>
 							Agendamento: <span id="AgeFeed2"></span>
 						</td>
@@ -116,17 +178,77 @@
 					
 				</table>
 	</div>
+
+
+<div class="modal fade" id="modalPeriodo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalPeriodoTitle"></h4>
+      </div>
+      <div class="modal-body">
+		  <form class="form-inline">
+			  <div class="form-group">
+				<label for="hrInicio">Horário</label>					
+				<input type="number" class="form-control" id="hrInicio" min="0" max="23" step="1">					
+				<label for="hrInicio2">:00</label>					
+			  </div>
+			  <div class="form-group">
+				<label for="hrFim">Até</label>
+				<input type="number" class="form-control" id="hrFim" min="0" max="23" step="1">					
+				<label for="hrFim2">:00</label>					
+			  </div>
+			</form>		          	
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" Onclick="AlterarPeriodo()">Alterar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalHorario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalHorarioTitle"></h4>
+      </div>
+      <div class="modal-body">
+		  <form class="form-inline">
+			  <div class="form-group">
+				<label for="hrHorario">Horário</label>					
+				<input type="number" class="form-control" id="hrInicio" min="0" max="23" step="1">					
+				<label for="hrInicio2">:00</label>					
+			  </div>			  
+			</form>		          	
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" Onclick="AlterarHorario()">Alterar</button>
+      </div>
+    </div>
+  </div>
+</div>
 	
 	</BODY>
 	
 	<script>
+	
+		
 	var urlServer = 'http://186.220.99.147:8099';
 	//http://192.168.0.99:99/
 	//8090
 	
+	var dadosRecebidos;
+	var tipoAgendamento = "";
+	
 	$(document).ready(function() {
 		console.log("Page Ready!");
 		BuscaDados();
+		//HabilitaModo(0);
 	});
 		
 	function BuscaDados() {
@@ -147,6 +269,8 @@
 	
 	function BindData(data) {
 		
+		dadosRecebidos = data;		
+		
 		$('#S1').removeClass('btn');
 		$('#S1').removeClass('btn btn-success');
 		$('#S1').removeClass('btn btn-danger');
@@ -160,6 +284,20 @@
 		$('#S4').removeClass('btn btn-success');
 		$('#S4').removeClass('btn btn-danger');
 		
+		$('#WHI').removeClass('btn');
+		$('#WHI').removeClass('btn btn-success');
+		$('#WHI').removeClass('btn btn-danger');
+		$('#BLU').removeClass('btn');
+		$('#BLU').removeClass('btn btn-success');
+		$('#BLU').removeClass('btn btn-danger');
+		$('#RED').removeClass('btn');
+		$('#RED').removeClass('btn btn-success');
+		$('#RED').removeClass('btn btn-danger');
+		$('#GRE').removeClass('btn');
+		$('#GRE').removeClass('btn btn-success');
+		$('#GRE').removeClass('btn btn-danger');
+		
+				
 		if(data.Auto == 1)
 		{
 			$("#rdModoA").prop("checked", true)		
@@ -177,14 +315,14 @@
 			$("#NivelBaixo").text("OK");
 		}
 		else{
-			$("#NivelBaixo").text("Fora de nível");
+			$("#NivelBaixo").text("Fora de nivel");
 		}
 		
 		if(data.NivelAlto == 0){			
 			$("#NivelAlto").text("OK");
 		}
 		else{
-			$("#NivelAlto").text("Fora de nível");
+			$("#NivelAlto").text("Fora de nivel");
 		}
 		
 		if(data.S1 == 1)
@@ -197,7 +335,6 @@
 			$("#S1").html('Desligada');						
 			$('#S1').addClass('btn btn-danger');
 		}		
-		$("#AgeS1").text("Não Agendado");
 		
 		if(data.S2 == 1)
 		{			
@@ -209,7 +346,6 @@
 			$("#S2").html('Desligada');			
 			$('#S2').addClass('btn btn-danger');
 		}
-		$("#AgeS2").text("Não Agendado");
 		
 		if(data.S3 == 1)
 		{			
@@ -221,7 +357,7 @@
 			$("#S3").html('Desligada');			
 			$('#S3').addClass('btn btn-danger');
 		}
-		$("#AgeS3").text(data.AgeS3HrI + ":00 até " + data.AgeS3HrF + ":00");
+		$("#AgeS3").text(data.AgeS3HrI + ":00 ate " + data.AgeS3HrF + ":00");
 		
 		if(data.S4 == 1)
 		{			
@@ -233,34 +369,39 @@
 			$("#S4").html('Desligada');			
 			$('#S4').addClass('btn btn-danger');
 		}
-		$("#AgeS4").text(data.AgeS4HrI + ":00 até " + data.AgeS4HrF + ":00");
-	
+		$("#AgeS4").text(data.AgeS4HrI + ":00 ate " + data.AgeS4HrF + ":00");
+		
+		$("#WHI").text("Desligado");
+		$("#BLU").text("Desligado");
+		$("#RED").text("Desligado");
+		$("#GRE").text("Desligado");
+		
 		if(data.Red == 255 && data.Green == 255 && data.Blue == 255){
-			$("#White").text("Ligado");
-		}
-		else{
-			$("#White").text("Desligado");
+			$("#WHI").text("Ligado");
 		}
 		
 		if(data.Red == 0 && data.Green == 0 && data.Blue > 0){
-			$("#Blue").text("Ligado");
-		}
-		else{
-			$("#Blue").text("Desligado");
+			$("#BLU").text("Ligado");
 		}
 		
-		$("#AgeRGBWHITE").text(data.AgeRGBWHITEHrI + ":00 até " + data.AgeRGBWHITEHrF + ":00");
+		if(data.Red > 0 && data.Green == 0 && data.Blue == 0){
+			$("#RED").text("Ligado");
+		}
 		
-			
+		if(data.Red == 0 && data.Green > 0 && data.Blue == 0){
+			$("#GRE").text("Ligado");
+		}
 		
-		$("#AgeRGBBLUE").text(data.AgeRGBBLUEHrI + ":00 até " + data.AgeRGBBLUEHrF + ":00");
+		$("#AgeRGBWHITE").text(data.AgeRGBWHITEHrI + ":00 ate " + data.AgeRGBWHITEHrF + ":00");					
+		$("#AgeRGBBLUE").text(data.AgeRGBBLUEHrI + ":00 ate " + data.AgeRGBBLUEHrF + ":00");
 		$("#AgeFeed1").text(data.AgeFeed1 + ":00");
 		$("#AgeFeed2").text(data.AgeFeed2 + ":00");
+		
+		HabilitaModo(data.Auto)
 	
 	}
 	function EnviarComandoSaida(saida)
-	{
-		
+	{		
 		var status = $("#" + saida).html();
 		var cmd = "?" + saida;
 		if(status == "Ligada"){
@@ -268,10 +409,22 @@
 		}
 		else{
 			cmd += "L";		
+		}					
+		EnviaComando(cmd);		
+	}
+	
+	function EnviarComandoRGB(saida)
+	{		
+		var status = $("#" + saida).html();
+		var cmd = "?";
+		if(status == "Ligada"){
+			 cmd += "RGBOFF";					
 		}
-					
-		EnviaComando(cmd);
-		
+		else
+		{			
+			cmd += saida;				
+		}					
+		EnviaComando(cmd);		
 	}
 	
 	function EnviaComando(comando) {
@@ -290,8 +443,107 @@
 				console.log("...done!");
 				console.log("");
 			});	
+		
+		if(comando == "?AUTOL" || comando == "?AUTOD")	
+		{
+			//Rebind para busca de dados após ativação de modo
+			BuscaDados();		
+		}			
 	}
-
+	
+	function HabilitaModo(Modo)
+	{			
+		if(Modo == 1) // automatico, desabilitar funcoes de agendamento com faixa de horário
+		{
+			$('#S3').prop('disabled', true);
+			$('#S4').prop('disabled', true);				
+			$('#WHI').prop('disabled', true);
+			$('#BLU').prop('disabled', true);
+			$('#RED').prop('disabled', true);
+			$('#GRE').prop('disabled', true);
+		}
+		else
+		{
+			$('#S3').prop('disabled', false);
+			$('#S4').prop('disabled', false);				
+			$('#WHI').prop('disabled', false);
+			$('#BLU').prop('disabled', false);
+			$('#RED').prop('disabled', false);
+			$('#GRE').prop('disabled', false);		
+		}	
+	}	
+	
+	function MostraPopUpPeriodo(acao)
+	{
+		$('#modalPeriodo').modal('show')
+		
+		if(acao == "S3")
+		{
+			tipoAgendamento= "?AgeS3Hr";
+			$("#modalPeriodoTitle").text("Agendamento Saida 3");			 
+			$("#hrInicio").text(dadosRecebidos.AgeS3HrI);
+			$("#hrFim").text(dadosRecebidos.AgeS3HrF);			
+		}
+		else if(acao == "S4")
+		{
+			tipoAgendamento= "?AgeS4Hr";
+			$("#modalPeriodoTitle").text("Agendamento Saida 4");
+			$("#hrInicio").text(dadosRecebidos.AgeS4HrI);
+			$("#hrFim").text(dadosRecebidos.AgeS4HrF);			
+		}
+		else if(acao == "WHI")
+		{				
+			tipoAgendamento= "?AgeRGBWHITEHr";
+			$("#modalPeriodoTitle").text("Agendamento Saida RGB - White");
+			$("#hrInicio").text(dadosRecebidos.AgeRGBWHITEHrI);
+			$("#hrFim").text(dadosRecebidos.AgeRGBWHITEHrF);			
+		}
+		else if(acao == "BLU")
+		{
+			tipoAgendamento= "?AgeRGBBLUEHr";
+			$("#modalPeriodoTitle").text("Agendamento Saida RGB - Blue");
+			$("#hrInicio").text(dadosRecebidos.AgeRGBBLUEHrI);
+			$("#hrFim").text(dadosRecebidos.AgeRGBBLUEHrF);			
+		}		
+	}
+	
+	function AlterarPeriodo()
+	{
+		var horaInicio = $("#hrInicio").val();	
+		var cmdIni = tipoAgendamento =  "I" + "|" + horaInicio + "|";		
+		EnviaComando(cmdIni);
+		
+		var horaFim = $("#hrFim").val();	
+		var cmdFim = tipoAgendamento =  "F" + "|" + horaFim + "|";		
+		EnviaComando(cmdFim);
+					
+	}	
+	
+	function MostraPopUpHorario(acao)
+	{
+		$('#modalHorario').modal('show')			
+		if(acao == "FEE1")
+		{
+			tipoAgendamento= "?AgeFeed1";
+			$("#modalHorarioTitle").text("Agendamento Alimentacao 1");			 
+			$("#hrHorario").text(dadosRecebidos.AgeFeed1);			
+		}
+		else if(acao == "FEE1")
+		{
+			tipoAgendamento= "?AgeFeed2";
+			$("#modalHorarioTitle").text("Agendamento Alimentacao 2");
+			$("#hrHorario").text(dadosRecebidos.AgeFeed2);			
+		}		
+	}
+	
+	function AlterarHorario()
+	{
+		var hora  = $("#hrHorario").val();	
+		var cmdHr = tipoAgendamento =  + "|" + hora + "|";		
+		EnviaComando(cmdHr);					
+	}
+	
 	</script>	
 <HTML>
+         
          
