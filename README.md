@@ -179,6 +179,26 @@ Imagem Modulo automatico
 Imagem Alarme
 
 
+
+Testando o hardware
+O primeiro teste é consumir a API REST que retorna os dados atualizados do sistema. Conecte o cabo de rede no shield de Ethernet e abra em um navegador o IP da placa.
+
+Imagem IP
+
+Se as configurações e conexões estiverem corretas, será apresentada a entrutura JSONP dos dados do sistema.
+
+Imagem navegador JSON
+
+
+
+O próximo passo é testar o acionamento das saidas conforme exemplo abaixo:
+Imagem api acionamento
+
+
+Pronto, temos nosso hardware montando, configurado e testado. NO último post da série vamos montar a interface gráfica de acesso ao sistema
+
+
+
 <br>
 
 
