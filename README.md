@@ -1,24 +1,31 @@
 
 
-Hoje vou apresentar um novo projeto para automação de aquários de água doce com a placa Automation Shield. Já fizemos um projeto de automação no post http://www.automacaolivre.com.br/2013/06/aquadroid-monitorando-um-aquario-com.html com LCD para apresentação dos dados e teclado para acesso as funcionalidades. A vantagem do novo projeto é a troca do LCD e teclado por uma interface gráfica que realiza o acesso, monitoramento e agendamento remoto.
+Hoje vou apresentar um novo projeto para automação de aquários de água doce com a placa Automation Shield. Já fizemos um projeto de automação no post http://www.automacaolivre.com.br/2013/06/aquadroid-monitorando-um-aquario-com.html com LCD para apresentação dos dados e teclado para acesso as funcionalidades. A vantagem do novo projeto é a troca do LCD e teclado por uma interface gráfica que realiza o acesso, monitoramento e agendamento de forma remota.
+
+Foto Equipamento
+
+
+Foto Painel de comando
+
 
 <br>
-O projeto permite automação de aquários marinhos, mas de forma limitada. Projetos com monitoramento e controle simultâneos de PH, ORP, Densidade, Temperatura, Nível e TPA automático exigem mais recursos de hardware e software, devendo usar como base um Arduino com mais recursos, como um Arduino Mega e uma expansão PCF8575. 
+O projeto permite automação de aquários marinhos, mas de forma limitada. Projetos com monitoramento e controle simultâneos de PH, ORP, Densidade, Temperatura, Nível, TPA automático e outras funcionalidades exigem mais recursos de hardware e software, devendo usar como base um Arduino com mais recursos, como um Arduino Mega e uma expansão PCF8575.  A placa Automation Shield é compatível com o Arduino Mega, mas ela não possui conectores para conexão direta, sendo necessária a remoção do Arduino Nano e a conexão com o Arduino Mega por Jumpers (D3-P1, D5-P2, D6-P3, A0-S1, A1-S2, A2-S3 e A3-S4).
 
 <br>
 Funcionalidades do Projeto
-4 Saídas com Relés para acionamento de Bomba, Termostato, Luz Fluorecente e outro dispositivo opcional.
-Iluminação RGB para criação de efeito noturno.
-Leitura de Temperatura.
-Leitura de PH.
-Sensor de nível baixo de água .
-Sensor de nível alto de água .
-Alimentador automático.
-Alarme de Temperatura, PH e Níveis de água fora da faixa estabelecida.
-Programação de horários de acionamento de saídas.
-Programação de horários de acionamento de iluminação.
-Programação de horários de alimentação.
-Interface HTML5 para acompanhamento dos parâmetros do aquário, alteração entre modos manual e automático, acionamento remoto de saídas e iluminação.
+-4 Saídas com Relés para acionamento de Bomba, Termostato, Luz Fluorecente e outro dispositivo opcional.
+-Iluminação RGB para criação de efeito noturno.
+-Leitura de Temperatura.
+-Leitura de PH.
+-Sensor de nível baixo de água.
+-Sensor de nível alto de água.
+-Alimentador automático.
+-Alarme de Temperatura, PH e Níveis de água fora da faixa estabelecida.
+-Programação de horários de acionamento de saídas.
+-Programação de horários de acionamento de iluminação.
+-Programação de horários de alimentação.
+-Interface HTML5 para acompanhamento dos parâmetros do aquário, alteração entre modos manual e automático, acionamento remoto de saídas e iluminação.
+
 <br>
 
 Conexões do Projeto
@@ -50,7 +57,14 @@ Analog
 7             
 
 <br>
-O projeto utiliza todos os recursos de Hardware e Software do "AutomationShield / Arduino Nano V3". Não é obrigátoria a construção do projeto com todas as funcionalidades propostas acima, a implementação pode ser feita de forma parcial e progressiva, mas um ponto de atenção é a integração com novos componentes ou shields. O projeto utiliza todas as IOs do Arduino Nano, restando apenas o pino A7. Adição de novas funcinalidades exigirá substituição de algum componente e análise de compatibilidade de recursos de IO e memória diponível.
+
+Leitura PH
+Não consegui 100% de sucesso na aferição em todas as leituras com a sonda pH, foram realizados testes seguindo toda a especificação do fabricante e do projeto https://github.com/sparkfun/H2O_pH_Probe desenvolvido pela SparkFun. Como o conjunto Sonda + Interface tem um custo alto, acompanhe a evolução do projeto e divulgação de novos testes antes de efetuar a compra.
+
+
+Alimentador
+Estou desenvolvendo com a impressora 3D um Alimentador automático para integração com o Aquadroid. Seu estágio atual está com uma boa perfomance com alimentos granulares, mas uma nova estrutura para alimentos em flocos ou grãos maiores está em análise.
+
 
 <br>
 Lista de componentes 
@@ -61,7 +75,7 @@ Lista de componentes
 1 - Shield Ethernet W5100, Atenção NÃO É compátivel o shield enc28j60.
 1 - Buzzer 5V.
 1 - Fita de Leds RGB com base de acrílico para sustentação, o ideal é usar 2 ou 3 faixas RGB com o comprimento do aquário. 
-1 - pH Sensor Kit, no projeto foi utilizado https://www.sparkfun.com/products/10972.
+1 - pH Sensor Kit, no projeto foi utilizado https://www.sparkfun.com/products/10972. -> Em ajustes finos.
 1 - Sensor De Temperatura Ds18b20 com cabo.
 1 - Resistor 4K7.
 3 - *Dissipadores  - Opcional, depende da carga utilizada na saída de Potência. Não foi necessário com carga de faixas RGB com até 2mts.
@@ -94,21 +108,31 @@ Separando os componentes
 
 
 
+
 Iniciando a montagem
 
 
 
+Furando a caixa
+
+
+
+Colocando a identidade visual
+
+
+
+Montagem finalizada
 
 
 
 <br>
-Programando e testando o Hardware
+Código Fonte Arduino
 <br>
-a primeira dica para inicio dos testes do projeto é testar de forma isolada as configurações do shield de Ethernet. Um bom teste é o post http://www.automacaolivre.com.br/2015/02/automation-shield-webserver-com-ws5100.html, prossiga apenas após realizar os testes com sucesso.
+Uma dica para início dos testes do projeto é testar de forma isolada as configurações do shield de Ethernet. Um bom teste inicial é o post http://www.automacaolivre.com.br/2015/02/automation-shield-webserver-com-ws5100.html, prossiga apenas após o  sucesso nos testes de envio de comandos.
 
 
 <br>
-A integração entre o equipamento e a interface gráfica de monitoramento será feita através de uma API REST, com ela será possível visualizar os estados de todas as funções do equipamento, acionar as saídas e alterar as rotinas de agendamento remotamente. A proposta de uso da API REST permite a criação de outros aplicativos nativos de acordo com o sistema operacional escolhido pelo usuário, conforme definição abaixo:
+A integração entre o equipamento e a interface gráfica de monitoramento será feita através de uma API REST, com ela será possível visualizar os estados de todas as funções do equipamento, acionar as saídas e alterar as rotinas de agendamento remotamente. A proposta de uso da API REST permite a criação de outros aplicativos nativos, de acordo com o sistema operacional escolhido pelo usuário.
 
 http://IP/
 
@@ -145,77 +169,110 @@ Alarme por faixas
 Preconfigurar Faixas
 
 
-API REST - Acionamento de funções
-
-
-
-
-API REST - Alteração de agendamentos pré-programados
-
-
-
 O programa é dividido em 6 métodos principais:
-BuscaData: Atualiza as varíaveis globais de data e hora com o horário atual fornecido pelo RTC.
-BuscaTemp: Atualiza a varíavel de temperatura fornecido pelo Ds18b20.
-BuscaPH:  Atualiza a varíavel de pH fornecido pela sonda de pH.
+getDateDs1307: Atualiza as varíaveis globais de data e hora com o horário atual fornecido pelo RTC.
+GetTemp: Atualiza a varíavel de temperatura fornecido pelo Ds18b20.
+GetPH:  Atualiza a varíavel de pH fornecido pela sonda de pH.
 WebServer: Recebe as requisições HTTP da interface gráfica para acionamento das saídas, agendamento e retorna o JSON com os dados atualizados do sistema.
-ModoAutomatico: Executa as ações de acionamento de saídas de acordo com os horários pré-programados.
-Alarme: Dispara o alarme sonoro de acordo com as faixas pré-configuradas de ph, temperatura e nível de agua.
+ModoAuto: Executa as ações de acionamento de saídas de acordo com os horários pré-programados.
+Alarme: Dispara o alarme sonoro de acordo com as faixas pré-configuradas de ph, temperatura e nível de água.
 
 
-Sempte desconecte qualquer Shield que esteja conectado as portas seriais do Arduino antes do Upload. As mesma porta serial é compartilhada entre o USB para a gravação do Arduino e da comunicação serial do Arduino, que no projeto está sendo usado para interface da sonda pH.
+Sempre desconecte qualquer Shield que esteja conectado com a porta serial do Arduino antes de realizar o Upload. As porta serial é compartilhada entre o USB para a gravação do Arduino Nano e comunicação serial do Arduino com outros shields. No projeto usamos a conexão serial para interface de integração com a sonda pH, se a mesma estiver conectada ocorrerá um conflito e erro durante o processo de Upload.
+
+
 
 WatchDog e EEPROM
-No projeto foi habilitado o WatchDog, a função dele é reiniciar o arduino se o programa que estiver em execução travar. No setup habilitamos ele com o método XXXX e a cada loop reiniciamos seu contador interno com o método XYZ, se o contador não for reiniciado, ele automaticamente reinicia o Arduino. Em conjunto com o WatchDog, todas as ações e configurações realizadas pelo usuário são gravadas na EEPROM, dessa forma, se o arduino travar, reinicar ou ocorrer uma interrupção de energia, ele reestabelecerá os estados de todas as saídas de acordo com a última solicitação do usuário. 
+No projeto foi habilitado o WatchDog. Sua função é reiniciar o Arduino se o programa que estiver em execução travar. No setup habilitamos com o método wdt_enable(WDTO_8S) um timeout de 8s, e a cada loop reiniciamos seu contador interno com o método wdt_reset(). Se o contador não for reiniciado em 8 segundos, ele automaticamente reiniciará o Arduino. Mas como ficam as últimas ações enviadas pelo usuário? Todas as ações e configurações realizadas pelo usuário são gravadas na EEPROM (Memória não vólatil, que não perde os dados por falta de energia ou reinicialização), dessa forma, se o arduino travar, reinicar ou ocorrer uma interrupção de energia, ele reestabelecerá os estados de todas as saídas e agedamentos de acordo com a última solicitação do usuário. 
  
-Imagem setup
+Imagem setup arduino
 
 
 Imagem loop
 
 
+
 Imagem WebServer
 
+
+
 Imagem Modulo automatico
+
+
 
 Imagem Alarme
 
 
+Código Fonte
 
-Testando o hardware
+
+Primeiros testes
 O primeiro teste é consumir a API REST que retorna os dados atualizados do sistema. Conecte o cabo de rede no shield de Ethernet e abra em um navegador o IP da placa.
 
-Imagem IP
+Imagem IP do codigo do arduino Nano
 
-Se as configurações e conexões estiverem corretas, será apresentada a entrutura JSONP dos dados do sistema.
+Se as configurações e conexões estiverem corretas, serão apresentados os dados do sistema em um formato Json.
 
 Imagem navegador JSON
 
 
 
-O próximo passo é testar o acionamento das saidas conforme exemplo abaixo:
+O próximo passo é testar o acionamento da saida S1, executando a API com o comando "http:\\192.168.0.201\?S1L" conforme exemplo abaixo:
+
+
+
 Imagem api acionamento
-
-
-Pronto, temos nosso hardware montando, configurado e testado. NO último post da série vamos montar a interface gráfica de acesso ao sistema
 
 
 
 <br>
-
-
 
 <br>
 Interface gráfica e testes finais de acesso ao sistema
 <br>
-A Interface gráfica de acesso ao sistema é uma página Html5. O principal objetivo dessa abordagem é a facilidade de portabilidade e execução em multiplos dispositivos, como Windows, Linux, Mac OS e celulares com Android, Windows Mobile, iOS, desde que rode em um navegador com suporte para HTML5.
+A Interface gráfica de acesso ao sistema é uma interface Html5. O principal objetivo dessa abordagem é a facilidade inicial de portabilidade e execução em multiplos dispositivos, como Windows, Linux, e celulares com Android, desde que rode em um navegador com suporte para HTML5. Durante os testes em multiplos dispoisitivos, criei algumas páginas com tamanho fixo e outras "Resposinvas", sendo que para Painel decidi manter tamanho fixo (o equipamento deve ter uma resolução mínima de 640x480) e um arquivo de setup responsivo, que se adapta a qualquer dispositivo.
+
+
+Devido a restrições de acesso do iOS ao sistema de arquivos do dispositivo, o projeto abaixo não é compátivel com   iPhone/iPad, sendo necessária a criação de uma aplicativo nativo que integre com as APIs do projeto. Uma alternativa é hospedar os arquivos html em um servidor com WebServer Apache, IIS, entre outros e realizar o acesso pelo iPhone/iPad.
+
+
+Configurações:
+Abra o arquivo aquadroid.js e configure a variável IP com o IP que foi configurado no arduino ou IP e Porta configurada no roteador. Eu configurei meu roteador para acesso externo ao IP do equipamento, dessa forma, eu acesso o painel do meu trabalho, na rua, durante viagens, etc. Para aumento de segurança de acesso, pode ser criada uma VPN em sua rede doméstica, de forma que o acesso ao IP do equipamento seja apenas permitido em conexões realizadas dentro de sua rede local. Roteadores como o XXXX, permitem a criação de uma VPN.
+
+
+Imagem roteador
+
+
+Imagem Configuração variavel
+
 
 <br>
-Para executar, copie os dois arquivos html e abra o arquivo aquadroid.html no browser. Os arquivos HTML dividem as funcionalidades em uma interface grafica, que monitora e apresenta os dados do aquário em tempo real e a ferramenta de setup, que permite visualizar e alterar as saidas e agendamentos. Para simplificar a distribuição, ambos arquivos dependem de arquivos de script, css e imagens hospedadas em servidores CDN, dessa forma, a conexão com internet é obrigatória, mesmo que o acesso ao Hardware seja feito em uma rede local. Os arquivos podem ser baixados localmente para não depender de acesso externo.
-<br>
+Executando o painel no Desktop:
+Abra no browser o arquivo painel.html, você deverá visualizar o painel com os dados atualizados do equipamento.
 
-Página de monitoramento
+Imagem Painel Computador
 
+
+
+Imagem Relatorios
+
+
+
+Imagem Setup Computador
+
+
+Executando o painel em dispositivos Android:
+Copie a pasta do projeto descompactada na área de arquivos do Android, nesse momento será necessário anotar o caminho completo até o arquivo Painel.html, se tiver dificuldade, use o aplicativo "ES File Explorer" para copiar o caminho completo. 
+
+Caminho
+
+Imagem ferramenta Path
+
+
+Abra o arquivo com o caminho completo em um navegador. Eu utilizo navegador UCBrowser, a vantagem dele é abrir o painel no modo fullscreen. 
+
+
+Painel de Monitoramento
 
 
 
@@ -224,10 +281,81 @@ Página de setup
 
 
 
-<br>
-Configurando o roteador para acesso externo
-<br>
-Meu roteador é fornecido pela net é um CISCO DPC3925, o roteiro será seguido com ele, mas basaicamente todos os roteadores tem a mesma função.
+
+Vídeo do sistema.
 
 
-Testes dos sistema
+
+
+
+O código fonte é open source e está publicado no meu GitHub XYX. O projeto está em constante evolução, aceitando sugestões e críticas. 
+
+Abs
+
+
+<HTML>
+	<HEAD>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">   
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>		
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+       <style> 	
+		.bodyw
+			{
+				background: url(backFishs.png); image
+				background-size: cover;
+			}
+	   </style>
+    </HEAD>
+    <BODY>	
+	
+		<div class="container">		
+			<br>
+			<br>
+			<table background="back.png" border="1" width="620" height="480" cellpading="2" celspacing="2">
+				<tr height="120px">				
+					<td> Logo Monitor <td>
+					<td>Automatico/Manual<td>
+					<td align="center">Temp 28<td>
+					<td align="center" width="30px"> PH 7.9<td>
+				</tr>	
+				<tr>				
+					<td><td>
+					<td><td>
+					<td>Iluminacao RGB White<td>
+					<td>Iluminacao RGB Azul<td>
+				</tr>	
+				<tr>				
+					<td>Alimentar<td>
+					<td><td>
+					<td><td>
+					<td><td>
+				</tr>	
+				<tr>				
+					<td align="center">AA OX <td>
+					<td align="center">AB OX<td>
+					<td align="center">AC OD<td>
+					<td align="center">AD OD<td>
+				</tr>	
+				<tr>				
+					<td>Configurações Alarme<td>
+					<td>Configurações Agendamento<td>
+					<td>icone grafico relatorio Temp<td>
+					<td>icone grafico relatorio PH<td>
+				</tr>
+				<tr>				
+					<td>Alarmes<td>
+					<td colspan="4">Nenhum alarme acionado - Nivel Baixo<td>					
+				</tr>
+			<table>
+		</div>	
+	</BODY>	
+<HTML>
+         
+         
