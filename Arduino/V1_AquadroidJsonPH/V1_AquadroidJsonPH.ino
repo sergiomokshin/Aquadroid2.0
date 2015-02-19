@@ -153,9 +153,9 @@ void setup() {
   //Setup inicial do horario do DS1307
   second = 00;
   minute = 8;
-  hour = 22;
+  hour = 21;
   dayOfWeek = 1;
-  dayOfMonth = 1;
+  dayOfMonth = 5;
   month = 2;
   year = 15;
   // setDateDs1307(second, minute, hour, dayOfWeek, dayOfMonth, month, year);
@@ -369,21 +369,21 @@ void WebServer() {
             buzzer = 3;
           }
 
-         if (readString.indexOf("?PH4") > 0) {
-             Serial.print("cal,low,4\r");
-         }
+          if (readString.indexOf("?PH4") > 0) {
+            Serial.print("cal,low,4\r");
+          }
 
-         if (readString.indexOf("?PH7") > 0) {
+          if (readString.indexOf("?PH7") > 0) {
             Serial.print("cal,mid,7\r");
-         }
+          }
 
           if (readString.indexOf("?PH10") > 0) {
             Serial.print("cal,high,10\r");
-         }
+          }
 
-         if (readString.indexOf("?PHC") > 0) {
+          if (readString.indexOf("?PHC") > 0) {
             PHCalibrate();
-         }
+          }
 
 
 
@@ -653,8 +653,32 @@ void Alimenta()
 {
 
   myservo.attach(PIN_FEEDER);
+
+
+  int i;
+  for (i = 0; i < 180; i++) {
+    myservo.write(i);
+    delay(5);
+  }
+  delay(100);
+  for (i = 180; i > 0; i--) {
+    myservo.write(i);
+    delay(5);
+  }
+
+  //myservo.write(0);
+  //myservo.write(160);
+  // myservo.write(0);
+
+  myservo.detach();
+  //  BuzzerConfirma();
+}
+
+void AlimentaServoSemFim()
+{
+
+  myservo.attach(PIN_FEEDER);
   int angle = 0;
-  //  for(angle = 90; angle < 110; angle += 1)
   for (angle = 90; angle < 150; angle += 1)
   {
     myservo.write(angle);
