@@ -77,9 +77,11 @@ int ValueBlue = 0; //Conteudo de memoria  Blue
 int buzzer = 0;
 
 String readString;
+char inputBuffer[10];   // For incoming serial data - PH
+
 byte second, minute, hour, dayOfWeek, dayOfMonth, month, year;
 int celsius;
-int PH;
+String PH;
 
 void setup() {
 
@@ -89,7 +91,9 @@ void setup() {
 
   Ethernet.begin(mac, ip, gateway, subnet);
   server.begin();
-  Serial.begin(9600);
+  //Serial.begin(9600); // for debug
+  Serial.begin(38400); //the pH stamp communicates at 38400 baud by default
+
 
   //Setup Inicial-> descomentar/ atribuir valores iniciais / build / upload / comentar novamente/ upload
   /*
@@ -155,14 +159,13 @@ void setup() {
   month = 2;
   year = 15;
   // setDateDs1307(second, minute, hour, dayOfWeek, dayOfMonth, month, year);
-
   BuzzerLiga();
 }
 
 void loop() {
   getDateDs1307(&second, &minute, &hour, &dayOfWeek, &dayOfMonth, &month, &year);
   GetTemp();
-  GetPH();  
+  GetPH();
   WebServer();
   ModoAuto();
   Buzzer();
@@ -183,7 +186,7 @@ void WebServer() {
 
         //if HTTP request has ended
         if (c == '\n') {
-          Serial.println(readString);
+          //          Serial.println(readString);
           if (readString.indexOf("?AUTOL") > 0) {
             ValueSaveAuto = 1;
             EEPROM.write(MemAuto, 1);
@@ -305,10 +308,10 @@ void WebServer() {
           if (readString.indexOf("?FEE") > 0) {
             Alimenta();
             buzzer = 1;
-          }          
-          
+          }
+
           if (readString.indexOf("?AgeS3HrI") > 0) {
-           
+
             int cmd = readString.substring(readString.indexOf("y") + 1, readString.lastIndexOf("y")).toInt();
             EEPROM.write(MemSaida3HrI, cmd);
             ValueSaida3HrI = cmd;
@@ -318,7 +321,7 @@ void WebServer() {
             ValueSaida3HrF = cmd;
             buzzer = 3;
           }
-           if (readString.indexOf("?AgeS4HrI") > 0) {
+          if (readString.indexOf("?AgeS4HrI") > 0) {
             int cmd = readString.substring(readString.indexOf("y") + 1, readString.lastIndexOf("y")).toInt();
             EEPROM.write(MemSaida4HrI, cmd);
             ValueSaida4HrI = cmd;
@@ -328,16 +331,16 @@ void WebServer() {
             ValueSaida4HrF = cmd;
             buzzer = 3;
           }
-        
+
 
           if (readString.indexOf("?AgeRGBWHITEHrI") > 0) {
             int cmd = readString.substring(readString.indexOf("y") + 1, readString.lastIndexOf("y")).toInt();
             EEPROM.write(MemRGBWHITEHrI, cmd);
             ValueRGBWHITEHrI = cmd;
-            
+
             cmd = readString.substring(readString.indexOf("z") + 1, readString.lastIndexOf("z")).toInt();
             EEPROM.write(MemRGBWHITEHrF, cmd);
-            ValueRGBWHITEHrF = cmd;            
+            ValueRGBWHITEHrF = cmd;
             buzzer = 3;
           }
 
@@ -345,27 +348,44 @@ void WebServer() {
             int cmd = readString.substring(readString.indexOf("y") + 1, readString.lastIndexOf("y")).toInt();
             EEPROM.write(MemRGBBLUEHrI, cmd);
             ValueRGBBLUEHrI = cmd;
-            
+
             cmd = readString.substring(readString.indexOf("z") + 1, readString.lastIndexOf("z")).toInt();
             EEPROM.write(MemRGBBLUEHrF, cmd);
             ValueRGBBLUEHrF = cmd;
             buzzer = 3;
           }
-          
+
           if (readString.indexOf("?AgeFeed1") > 0) {
             int cmd = readString.substring(readString.indexOf("y") + 1, readString.lastIndexOf("y")).toInt();
             EEPROM.write(MemFEEDHr1, cmd);
             ValueFEEDHr1 = cmd;
             buzzer = 3;
           }
-          
+
           if (readString.indexOf("?AgeFeed2") > 0) {
             int cmd = readString.substring(readString.indexOf("y") + 1, readString.lastIndexOf("y")).toInt();
             EEPROM.write(MemFEEDHr2, cmd);
             ValueFEEDHr2 = cmd;
             buzzer = 3;
           }
-          
+
+         if (readString.indexOf("?PH4") > 0) {
+             Serial.print("cal,low,4\r");
+         }
+
+         if (readString.indexOf("?PH7") > 0) {
+            Serial.print("cal,mid,7\r");
+         }
+
+          if (readString.indexOf("?PH10") > 0) {
+            Serial.print("cal,high,10\r");
+         }
+
+         if (readString.indexOf("?PHC") > 0) {
+            PHCalibrate();
+         }
+
+
 
           SendResponse(client);
           delay(1);
@@ -409,7 +429,8 @@ void SendResponse(EthernetClient client) {
   client.println("\"");
 
   client.print(",\"PH\":\"");
-  client.print(PH, DEC);
+  client.print(PH);
+  //  client.print(PH, DEC);
   client.println("\"");
 
   client.print(",\"Data\":\"");
@@ -595,7 +616,7 @@ void GetTemp() {
       type_s = 0;
       break;
     default:
-      Serial.println("Device is not a DS18x20 family device.");
+      //Serial.println("Device is not a DS18x20 family device.");
       return;
   }
 
@@ -642,8 +663,6 @@ void Alimenta()
   myservo.detach();
   delay(300);
   //  BuzzerConfirma();
-  Serial.print("Alimentacao OK");
-
 }
 
 void getDateDs1307(byte * second,
@@ -746,8 +765,29 @@ void buzz(int targetPin, long frequency, long length) {
   }
 }
 
-void GetPH(){
-    PH = 7;
+void GetPH() {
+  //PHCalibrate();
+  getPhSensor();
 }
+void getPhSensor()
+{
+  //This function queries the pH stamp to return one reading of pH
+  Serial.print("R\r"); //send R followed by a carriage return prompts the stamp to send back a single pH reading
+  delay(10);
 
+  Serial.readBytesUntil(13, inputBuffer, 20); //this reads back the results into the inputBuffer we created until it sees
+  //a carriage return (13) or until it reaches 20 bytes (which it shouldn't)
+  delay(500);
+  PH = inputBuffer;
+  Serial.print(inputBuffer);// print the pH value to the Serial port, which is connected to the LCD.
+}
+//-----------------------------------------------------------
+void PHCalibrate()
+{
+  //This function calibrates the pH stamp with the current temperature read from the DS18B20 temp sensor
+  delay(500);
+  Serial.print(celsius); //pritn temp in degrees C to Ph Sensor
+  Serial.write("\r"); //carrage return
+  delay(1000);
+}
 

@@ -87,7 +87,7 @@
 							</button>													
 						</td>	
 						<td>
-							Agendamento: <span id="AgeS3"></span>
+							<span id="AgeS3"></span>
 						</td>
 					</tr>
 					<tr>
@@ -101,7 +101,7 @@
 							</button>													
 						</td>	
 						<td>
-							Agendamento: <span id="AgeS4"></span>
+							<span id="AgeS4"></span>
 						</td>
 					</tr>
 					
@@ -116,7 +116,7 @@
 							</button>													
 						</td>							
 						<td>
-							Agendamento: <span id="AgeRGBWHITE"></span>
+							<span id="AgeRGBWHITE"></span>
 						</td>
 					</tr>
 					<tr>
@@ -130,7 +130,7 @@
 							</button>													
 						</td>							
 						<td>
-							Agendamento: <span id="AgeRGBBLUE"></span>
+							<span id="AgeRGBBLUE"></span>
 						</td>
 					</tr>
 					<tr>
@@ -162,7 +162,7 @@
 							</button>													
 						</td>							
 						<td>
-							Agendamento: <span id="AgeFeed1"></span>
+							<span id="AgeFeed1"></span>
 						</td>
 					</tr>
 					<tr>
@@ -176,8 +176,32 @@
 							</button>													
 						</td>							
 						<td>
-							Agendamento: <span id="AgeFeed2"></span>
+							<span id="AgeFeed2"></span>
 						</td>
+					</tr>
+					<tr>
+						<td>PH 4</td>
+						<td colspan="3">
+							<button type="button" id="PH4" class="btn btn-info" Onclick="EnviaComando('?PH4')">Calibrar</button>																		
+						</td>						
+					</tr>
+					<tr>
+						<td>PH 7</td>
+						<td colspan="3">
+							<button type="button" id="PH4" class="btn btn-info" Onclick="EnviaComando('?PH7')">Calibrar</button>																		
+						</td>						
+					</tr>
+					<tr>
+						<td>PH 10</td>
+						<td colspan="3">
+							<button type="button" id="PH4" class="btn btn-info" Onclick="EnviaComando('?PH10')">Calibrar</button>																		
+						</td>						
+					</tr>
+					<tr>
+						<td>PH Temp</td>
+						<td colspan="3">
+							<button type="button" id="PH4" class="btn btn-info" Onclick="EnviaComando('?PHC')">Calibrar</button>																		
+						</td>						
 					</tr>
 					
 				</table>
@@ -201,7 +225,7 @@
 			  <div class="form-group">
 				<label for="hrFim">Até</label>
 				<input type="number" class="form-control" id="hrFim" min="0" max="23" step="1">					
-				<label for="hrFim2">:00</label>					
+				<label for="hrFim2">:59</label>					
 			  </div>
 			</form>		          	
       </div>
@@ -365,7 +389,7 @@
 			$("#S3").html('Desligada');			
 			$('#S3').addClass('btn btn-danger');
 		}
-		$("#AgeS3").text(data.AgeS3HrI + ":00 ate " + data.AgeS3HrF + ":00");
+		$("#AgeS3").text(data.AgeS3HrI + ":00 ate " + data.AgeS3HrF + ":59");
 		
 		if(data.S4 == 1)
 		{			
@@ -377,7 +401,7 @@
 			$("#S4").html('Desligada');			
 			$('#S4').addClass('btn btn-danger');
 		}
-		$("#AgeS4").text(data.AgeS4HrI + ":00 ate " + data.AgeS4HrF + ":00");
+		$("#AgeS4").text(data.AgeS4HrI + ":00 ate " + data.AgeS4HrF + ":59");
 		
 			
 		
@@ -421,8 +445,8 @@
 			$('#GRE').addClass('btn btn-danger');
 		}
 		
-		$("#AgeRGBWHITE").text(data.AgeRGBWHITEHrI + ":00 ate " + data.AgeRGBWHITEHrF + ":00");					
-		$("#AgeRGBBLUE").text(data.AgeRGBBLUEHrI + ":00 ate " + data.AgeRGBBLUEHrF + ":00");
+		$("#AgeRGBWHITE").text(data.AgeRGBWHITEHrI + ":00 ate " + data.AgeRGBWHITEHrF + ":59");					
+		$("#AgeRGBBLUE").text(data.AgeRGBBLUEHrI + ":00 ate " + data.AgeRGBBLUEHrF + ":59");
 		$("#AgeFeed1").text(data.AgeFeed1 + ":00");
 		$("#AgeFeed2").text(data.AgeFeed2 + ":00");
 		
@@ -540,7 +564,7 @@
 	{
 		var horaInicio = $("#hrInicio").val();	
 		var horaFim = $("#hrFim").val();	
-		var cmdIni = tipoAgendamento +  "I" + "|" + horaInicio + "|" + tipoAgendamento +  "F" + "]" + horaFim + "]";
+		var cmdIni = tipoAgendamento +  "I" + "y" + horaInicio + "y" + tipoAgendamento +  "F" + "z" + horaFim + "z";
 		EnviaComando(cmdIni);
 											
 		BuscaDados();
@@ -568,7 +592,7 @@
 	function AlterarHorario()
 	{
 		var hora  = $("#hrHorario").val();	
-		var cmdHr = tipoAgendamento + "|" + hora + "|";		
+		var cmdHr = tipoAgendamento + "y" + hora + "y";		
 		EnviaComando(cmdHr);
 		$('#modalHorario').modal('hide')		
 	}

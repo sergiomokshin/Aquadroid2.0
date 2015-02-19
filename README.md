@@ -163,6 +163,8 @@ ModoAutomatico: Executa as ações de acionamento de saídas de acordo com os ho
 Alarme: Dispara o alarme sonoro de acordo com as faixas pré-configuradas de ph, temperatura e nível de agua.
 
 
+Sempte desconecte qualquer Shield que esteja conectado as portas seriais do Arduino antes do Upload. As mesma porta serial é compartilhada entre o USB para a gravação do Arduino e da comunicação serial do Arduino, que no projeto está sendo usado para interface da sonda pH.
+
 WatchDog e EEPROM
 No projeto foi habilitado o WatchDog, a função dele é reiniciar o arduino se o programa que estiver em execução travar. No setup habilitamos ele com o método XXXX e a cada loop reiniciamos seu contador interno com o método XYZ, se o contador não for reiniciado, ele automaticamente reinicia o Arduino. Em conjunto com o WatchDog, todas as ações e configurações realizadas pelo usuário são gravadas na EEPROM, dessa forma, se o arduino travar, reinicar ou ocorrer uma interrupção de energia, ele reestabelecerá os estados de todas as saídas de acordo com a última solicitação do usuário. 
  
