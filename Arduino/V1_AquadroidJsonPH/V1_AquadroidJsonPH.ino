@@ -159,13 +159,19 @@ void setup() {
   month = 2;
   year = 15;
   // setDateDs1307(second, minute, hour, dayOfWeek, dayOfMonth, month, year);
+
+  GetTemp();
+  GetPH();
   BuzzerLiga();
 }
 
 void loop() {
   getDateDs1307(&second, &minute, &hour, &dayOfWeek, &dayOfMonth, &month, &year);
-  GetTemp();
-  GetPH();
+  if (second < 2)
+  {
+    GetTemp();
+    GetPH();
+  }
   WebServer();
   ModoAuto();
   Buzzer();
@@ -186,15 +192,52 @@ void WebServer() {
 
         //if HTTP request has ended
         if (c == '\n') {
-          //          Serial.println(readString);
+          //Serial.println(readString);
+
           if (readString.indexOf("?AUTOL") > 0) {
             ValueSaveAuto = 1;
             EEPROM.write(MemAuto, 1);
           }
+
           if (readString.indexOf("?AUTOD") > 0) {
             ValueSaveAuto = 0;
             EEPROM.write(MemAuto, 0);
           }
+
+          if (readString.indexOf("?DataHora") > 0) {
+            
+            String Data = readString.substring(readString.indexOf("y") + 1, readString.lastIndexOf("y"));
+            String Horario = readString.substring(readString.indexOf("z") + 1, readString.lastIndexOf("z"));            
+
+            //Serial.println(Data);
+            //Serial.println(Horario);
+
+            String Dia = Data.substring(0, Data.indexOf("/"));
+            String temp = Data.substring(Data.indexOf("/"));      
+            String Mes = temp.substring(1, 3);            
+            String Ano = temp.substring(temp.lastIndexOf("/") +3); //YY
+            
+            //Serial.println(Dia);
+            //Serial.println(Mes);
+            //Serial.println(Ano);            
+
+            String Hora = Horario.substring(0, Horario.indexOf(":"));
+            String temp2 = Horario.substring(Horario.indexOf(":"));      
+            String Minuto = temp2.substring(1, 3);                                  
+
+            //Serial.println(Hora);
+            //Serial.println(Minuto);
+                        
+            second = 0;
+            minute = Minuto.toInt();
+            hour = Hora.toInt();
+            dayOfWeek = 1;
+            dayOfMonth = Dia.toInt();
+            month = Mes.toInt();
+            year = Ano.toInt();
+            setDateDs1307(second, minute, hour, dayOfWeek, dayOfMonth, month, year);
+          }
+
 
           if (readString.indexOf("?S1L") > 0) {
             digitalWrite(A0, HIGH);
@@ -433,20 +476,18 @@ void SendResponse(EthernetClient client) {
   //  client.print(PH, DEC);
   client.println("\"");
 
-  client.print(",\"Data\":\"");
-  client.print(dayOfMonth, DEC);
-  client.print("/");
-  client.print(month, DEC);
-  client.print("/");
-  client.print(year, DEC);
-  client.println("\"");
-  client.print(",\"Hora\":\"");
-  client.print(hour, DEC);
-  client.print(":");
-  client.print(minute, DEC);
-  client.print(":");
-  client.print(second, DEC);
-  client.println("\"");
+  client.print(",\"Day\":");
+  client.println(dayOfMonth, DEC);
+  client.print(",\"Mounth\":");
+  client.println(month, DEC);
+  client.print(",\"Year\":");
+  client.println(year, DEC);
+  client.print(",\"Hour\":");
+  client.println(hour, DEC);
+  client.print(",\"Minute\":");
+  client.println(minute, DEC);
+  client.print(",\"Second\":");
+  client.println(second, DEC);
 
   client.print(",\"S1\":");
   client.println(S1);
@@ -814,4 +855,5 @@ void PHCalibrate()
   Serial.write("\r"); //carrage return
   delay(1000);
 }
+
 

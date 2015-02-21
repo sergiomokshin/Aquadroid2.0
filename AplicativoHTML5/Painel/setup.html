@@ -22,38 +22,43 @@
         <table class="table table-bordered">
             <tr>
                 <td width="120px">Modo: </td>
-                <td>
+                <td colspan="2">
                     <label class="radio-inline">
-                        <input type="radio" name="rdModo" id="rdModoA" value="A" onclick="EnviaComando('AUTOL')">
+                        <input type="radio" name="rdModo" id="rdModoA" value="A" onclick="EnviarComando('AUTOL')">
                         Automatico						
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="rdModo" id="rdModoM" value="M" onclick="EnviaComando('AUTOD')">
+                        <input type="radio" name="rdModo" id="rdModoM" value="M" onclick="EnviarComando('AUTOD')">
                         Manual						
                     </label>
                     <img src="Images/icoLoading.gif" id="icoExeAUTOL">
                     <img src="Images/icoLoading.gif" id="icoExeAUTOD">
                 </td>
-                <tr>
+            <tr>
             <tr>
                 <td>Data: </td>
-                <td><span id="DataHW"></span></td>
+                <td width="170px"><span id="DataHW"></span></td>
+				<td>
+					<button type="button" class="btn btn-info" aria-label="Left Align" id="btHorarioArduino" onclick="MostraPopUpHorarioArduino()">
+							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+					</button>
+				</td>
             </tr>
             <tr>
                 <td>Temperatura: </td>
-                <td><span id="Temperatura"></span></td>
+                <td colspan="2"><span id="Temperatura"></span></td>
             </tr>
             <tr>
                 <td>PH: </td>
-                <td><span id="PH"></span></td>
+                <td colspan="2"><span id="PH"></span></td>
             </tr>
             <tr>
                 <td>Nivel Baixo: </td>
-                <td><span id="NivelBaixo"></span></td>
+                <td colspan="2"><span id="NivelBaixo"></span></td>
             </tr>
             <tr>
                 <td>Nivel Alto: </td>
-                <td><span id="NivelAlto"></span></td>
+                <td colspan="2"><span id="NivelAlto"></span></td>
             </tr>
         </table>
         <table class="table table-bordered">
@@ -158,7 +163,7 @@
             <tr>
                 <td>Alimentacao 1</td>
                 <td>
-                    <button type="button" id="Alimenta1" class="btn btn-warning" onclick="EnviaComando('FEE1')">Alimentar</button>
+                    <button type="button" id="Alimenta1" class="btn btn-warning" onclick="EnviarComando('FEE1')">Alimentar</button>
                     <img src="Images/icoLoading.gif" id="icoExecFEE1">
                 </td>
                 <td>
@@ -173,7 +178,7 @@
             <tr>
                 <td>Alimentacao 2</td>
                 <td>
-                    <button type="button" id="Alimenta2" class="btn btn-warning" onclick="EnviaComando('FEE2')">Alimentar</button>
+                    <button type="button" id="Alimenta2" class="btn btn-warning" onclick="EnviarComando('FEE2')">Alimentar</button>
                     <img src="Images/icoLoading.gif" id="icoExecFEE2">
                 </td>
                 <td>
@@ -188,7 +193,7 @@
             <tr>
                 <td>PH</td>
                 <td colspan="3">
-                    <button type="button" id="PH4" class="btn btn-info" onclick="EnviaComando('?PHC')">Calibrar</button>
+                    <button type="button" id="PH4" class="btn btn-info" onclick="EnviarComando('PHC')">Calibrar</button>
                     <img src="Images/icoLoading.gif" id="icoExecPHC">
                 </td>
             </tr>
@@ -196,6 +201,34 @@
         </table>
     </div>
 
+	 <div class="modal fade" id="modalHorarioArduino" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalHorarioArduinoTitle"></h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="DataArduino">Data</label>
+                            <input type="text" class="form-control" id="DataArduino">
+                        </div>
+                        <div class="form-group">
+                            <label for="HoraArduino">Hora</label>
+                            <input type="time" class="form-control" id="HoraArduino">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" onclick="AlterarHorarioArduino()">Alterar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	
 
     <div class="modal fade" id="modalPeriodo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -254,9 +287,9 @@
 
 <script>
 
-    var ipArduino = 'http://186.220.99.147:8099';
-    //http://192.168.0.99:99/
-    //http://s6.picdn.net/images/loading_icon_2_rev01.gif
+    //var ipArduino = 'http://186.220.99.147:8099';
+	var ipArduino = 'http://192.168.0.201';
+    //http://192.168.0.99:99/    
 
     var dadosRecebidos;
     var tipoAgendamento = "";
@@ -266,9 +299,10 @@
         $('#icoExeAUTOL').hide();
         CriaBancoRelatorio();
         BuscaDados();
-
+			
+		
         setInterval(function () {
-            BuscaDados();
+            //BuscaDados();
         }, 10000);
 
     });
@@ -325,7 +359,7 @@
             $("#rdModoM").prop("checked", true)
         }
 
-        $("#DataHW").text(data.Data + " " + data.Hora);
+        $("#DataHW").text(RetornaData() + " " + RetornaHora());
         $("#Temperatura").text(data.Temp);
         $("#PH").text(data.PH);
 
@@ -386,38 +420,38 @@
 
 
         if (data.Red == 255 && data.Green == 255 && data.Blue == 255) {
-            $("#WHI").text("Ligado");
+            $("#WHI").text("Ligada");
             $('#WHI').addClass('btn btn-success');
         }
         else {
-            $("#WHI").text("Desligado");
+            $("#WHI").text("DesLigada");
             $('#WHI').addClass('btn btn-danger');
         }
 
         if (data.Red == 0 && data.Green == 0 && data.Blue > 0) {
-            $("#BLU").text("Ligado");
+            $("#BLU").text("Ligada");
             $('#BLU').addClass('btn btn-success');
         }
         else {
-            $("#BLU").text("Desligado");
+            $("#BLU").text("DesLigada");
             $('#BLU').addClass('btn btn-danger');
         }
 
         if (data.Red > 0 && data.Green == 0 && data.Blue == 0) {
-            $("#RED").text("Ligado");
+            $("#RED").text("Ligada");
             $('#RED').addClass('btn btn-success');
         }
         else {
-            $("#RED").text("Desligado");
+            $("#RED").text("DesLigada");
             $('#RED').addClass('btn btn-danger');
         }
 
         if (data.Red == 0 && data.Green > 0 && data.Blue == 0) {
-            $("#GRE").text("Ligado");
+            $("#GRE").text("Ligada");
             $('#GRE').addClass('btn btn-success');
         }
         else {
-            $("#GRE").text("Desligado");
+            $("#GRE").text("DesLigada");
             $('#GRE').addClass('btn btn-danger');
         }
 
@@ -457,10 +491,12 @@
         }
         Enviar(cmd);
     }
+	
     function EnviarComando(saida) {
         $("#icoExec" + saida).show();
-        Enviar("?" + cmd);
+        Enviar("?" + saida);
     }
+	
     function Enviar(comando) {
 
         var urlComando = ipArduino + comando;
@@ -505,6 +541,29 @@
         }
     }
 
+	
+	function MostraPopUpHorarioArduino(acao) {
+        $('#modalHorarioArduino').modal('show')
+			
+		$("#modalHorarioArduinoTitle").text("Alterar Horário Equipamento");			
+	 			
+		$("#DataArduino").val(RetornaData());
+        $("#HoraArduino").val(RetornaHora());        
+    }	
+	
+	
+	function AlterarHorarioArduino(){
+		
+		var DataArduino = $("#DataArduino").val();
+        var HoraArduino = $("#HoraArduino").val();
+        var cmdIni = "?DataHora" + "y" + DataArduino + "yz" + HoraArduino + "z";
+        Enviar(cmdIni);
+
+        //BuscaDados();
+        $('#modalHorarioArduino').modal('hide')
+	
+	}
+	
     function MostraPopUpPeriodo(acao) {
         $('#modalPeriodo').modal('show')
 
@@ -538,13 +597,14 @@
         var horaInicio = $("#hrInicio").val();
         var horaFim = $("#hrFim").val();
         var cmdIni = tipoAgendamento + "I" + "y" + horaInicio + "y" + tipoAgendamento + "F" + "z" + horaFim + "z";
-        EnviaComando(cmdIni);
+        Enviar(cmdIni);
 
         BuscaDados();
 
         $('#modalPeriodo').modal('hide')
     }
-
+	
+	
     function MostraPopUpHorario(acao) {
         $('#modalHorario').modal('show')
         if (acao == "FEE1") {
@@ -562,7 +622,7 @@
     function AlterarHorario() {
         var hora = $("#hrHorario").val();
         var cmdHr = tipoAgendamento + "y" + hora + "y";
-        EnviaComando(cmdHr);
+        Enviar(cmdHr);
         $('#modalHorario').modal('hide');
     }
 
@@ -656,9 +716,59 @@
         else {
             alert('Seu browser não suporta WebSql Database !');
         }
-
-
-
     }
+	
+	function RetornaData()
+	{
+		var data = "";
+		
+		if(dadosRecebidos.Day <10)	{
+			data = "0" + dadosRecebidos.Day + "/";
+		}
+		else{
+			data = dadosRecebidos.Day + "/";
+		}
+		
+		if(dadosRecebidos.Mounth <10)	{
+			data += "0" + dadosRecebidos.Mounth + "/";
+		}
+		else{
+			data += dadosRecebidos.Mounth + "/";
+		}		
+		data += "20" + dadosRecebidos.Year;
+		
+		return data;
+	}
+	
+	function RetornaHora()
+	{
+		var hora = "";
+		
+		if(dadosRecebidos.Hour <10)	{
+			hora = "0" + dadosRecebidos.Hour + ":";
+		}
+		else{
+			hora = dadosRecebidos.Hour + ":";
+		}
+		
+		if(dadosRecebidos.Minute <10)	{
+			hora += "0" + dadosRecebidos.Minute + ":";
+		}
+		else{
+			hora += dadosRecebidos.Minute + ":";
+		}		
+		
+		if(dadosRecebidos.Second <10)	{
+			hora += "0" + dadosRecebidos.Second;
+		}
+		else{
+			hora += dadosRecebidos.Second;
+		}		
+			
+		return hora;
+	
+	}
+		
+	
 	</script>
 <html>
