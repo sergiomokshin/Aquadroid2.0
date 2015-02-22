@@ -74,6 +74,10 @@ int ValueRed = 0; //Conteudo de memoria  Red
 int ValueGreen = 0; //Conteudo de memoria  Green
 int ValueBlue = 0; //Conteudo de memoria  Blue
 
+int ValueSaida1ModoAuto = HIGH; // Define que Saida 1 (Bomba) deve sempre Ligada no modo automatico
+int ValueSaida2ModoAuto = HIGH; // Define que Saida 2 (Termostato) deve sempre Ligada no modo automatico
+
+
 int buzzer = 0;
 
 String readString;
@@ -540,9 +544,15 @@ void SendResponse(EthernetClient client) {
 
 void ModoAuto() {
 
-  //Saida 1 e Saida 2 utilizadas na Bomba e termostato não possuem agendamento de horarios
+  //Verifica se modo Automático está ativado
   if (ValueSaveAuto == 1)
-  {
+  {        
+    //Saida 1 -> Atribui valor default de modo automatico para saida 1 (Saida 1 nao tem agedamento -> Bomba) - Para alterar status altere para modo manual e envie comando de desligamento
+    digitalWrite(A0, ValueSaida1ModoAuto);
+    
+    //Saida 2-> Atribui valor default de modo automatico para saida 2 (Saida 2 nao tem agedamento -> Termostato) - Para alterar status altere para modo manual e envie comando de desligamento
+    digitalWrite(A1, ValueSaida2ModoAuto);    
+        
     //Saida 3
     if (ValueSaida3HrI <= hour && ValueSaida3HrF >= hour)
     {
@@ -831,7 +841,7 @@ void buzz(int targetPin, long frequency, long length) {
 }
 
 void GetPH() {
-  //PHCalibrate();
+  PHCalibrate();
   getPhSensor();
 }
 void getPhSensor()

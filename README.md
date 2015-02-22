@@ -8,8 +8,32 @@ Foto Equipamento
 Foto Painel de comando
 
 
+
+Exemplos de algumas funcionalidades
+
+
+Ajuste de data
+
+
+
+Agendamento de Iluminação
+
+
+
+Acionamento de saida
+
+
+Acionamento de alimentaçõ
+
+
+
+
+
+Adendamento Iluminação Noturna  -> 4hs
+
+
 <br>
-O projeto permite automação de aquários marinhos, mas de forma limitada. Projetos com monitoramento e controle simultâneos de PH, ORP, Densidade, Temperatura, Nível, TPA automático e outras funcionalidades exigem mais recursos de hardware e software, devendo usar como base um Arduino com mais recursos, como um Arduino Mega e uma expansão PCF8575.  A placa Automation Shield é compatível com o Arduino Mega, mas ela não possui conectores para conexão direta, sendo necessária a remoção do Arduino Nano e a conexão com o Arduino Mega por Jumpers (D3-P1, D5-P2, D6-P3, A0-S1, A1-S2, A2-S3 e A3-S4).
+
 
 <br>
 Funcionalidades do Projeto
@@ -289,6 +313,10 @@ Vídeo do sistema.
 
 
 O código fonte é open source e está publicado no meu GitHub XYX. O projeto está em constante evolução, aceitando sugestões e críticas. 
+
+
+O projeto permite automação de aquários marinhos, mas de forma limitada. Projetos com monitoramento e controle simultâneos de PH, ORP, Densidade, Temperatura, Nível, TPA automático e outras funcionalidades exigem mais recursos de hardware e software, devendo usar como base um Arduino com mais recursos, como um Arduino Mega e uma expansão PCF8575.  A placa Automation Shield é compatível com o Arduino Mega, mas ela não possui conectores para conexão direta, sendo necessária a remoção do Arduino Nano e a conexão com o Arduino Mega por Jumpers (D3-P1, D5-P2, D6-P3, A0-S1, A1-S2, A2-S3 e A3-S4).
+
 
 Abs
  
