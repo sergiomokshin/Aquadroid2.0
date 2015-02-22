@@ -15,9 +15,7 @@ Exemplos de algumas funcionalidades
 Ajuste de data
 
 
-
 Agendamento de Iluminação
-
 
 
 Acionamento de saida
@@ -26,10 +24,13 @@ Acionamento de saida
 Acionamento de alimentaçõ
 
 
-
-
-
 Adendamento Iluminação Noturna  -> 4hs
+
+
+Calibração de PH
+
+
+Acionamento Luz Azul
 
 
 <br>
@@ -165,8 +166,12 @@ dataCB({
 "Auto":"1"   			-> Indica se está executando no modo automático (1) ou Manual (0)
 ,"Temp":"27.3125000000" -> Temperatura
 ,"PH":"7" 				-> PH
-,"Data":"17/2/15"		-> Data
-,"Hora":"17:27:25"		-> Data
+,"Day":22				-> Dia
+,"Mounth":2				-> Mes
+,"Year":15				-> Ano
+,"Hour":20				-> Hora
+,"Minute":27			-> Minuto
+,"Second":17			-> Segundo
 ,"S1":1					-> Estado da Saida 1  Ligado (1) ou Desligado (0)
 ,"S2":0					-> Estado da Saida 2  Ligado (1) ou Desligado (0)
 ,"S3":0					-> Estado da Saida 3  Ligado (1) ou Desligado (0)
@@ -183,15 +188,15 @@ dataCB({
 ,"AgeRGBBLUEHrF":22 	-> Horario fim agendamento faixa RGB na cor Azul
 ,"AgeFeed1":10 			-> Horario primeira Alimentacao
 ,"AgeFeed2":19 			-> Horario segunda Alimentacao
+,"Red":0 				-> Luminosidade Fixa RGB RED (0- Desligado 255- Máximo)
+,"Green":0 				-> Luminosidade Fixa RGB Green (0- Desligado 255- Máximo)
+,"Blue":255 			-> Luminosidade Fixa RGB Blue (0- Desligado 255- Máximo)
 })
 
 Pendente
-Alterar agendamento de Feed
-Retornar PH
-Mostrar PH
 Alarme por faixas
 Preconfigurar Faixas
-
+Corrigir ajuste de segundo
 
 O programa é dividido em 6 métodos principais:
 getDateDs1307: Atualiza as varíaveis globais de data e hora com o horário atual fornecido pelo RTC.
