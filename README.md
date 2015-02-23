@@ -1,27 +1,31 @@
 
-
-Hoje vou apresentar um novo projeto para automação de aquários de água doce com a placa Automation Shield. Já fizemos um projeto de automação no post http://www.automacaolivre.com.br/2013/06/aquadroid-monitorando-um-aquario-com.html com LCD para apresentação dos dados e teclado para acesso as funcionalidades. A vantagem do novo projeto é a troca do LCD e teclado por uma interface gráfica que realiza o acesso, monitoramento e agendamento de forma remota.
-
-Foto Equipamento
+Hoje vou apresentar um novo projeto para automação de aquários de água doce. Já fizemos um projeto de automação no post http://www.automacaolivre.com.br/2013/06/aquadroid-monitorando-um-aquario-com.html com LCD para apresentação dos dados e teclado para acesso as funcionalidades. A vantagem do novo projeto é a troca do LCD e teclado numérico por uma interface gráfica que realiza o acesso, monitoramento e agendamento de forma remota.
 
 
-Foto Painel de comando
+Equipamento
+
+
+
+Painel de comando
 
 
 
 Exemplos de algumas funcionalidades
+Acionamento de saida
 
 
-Ajuste de data
+
+Agendamento de acionamento de saída
+
+
 
 
 Agendamento de Iluminação
 
 
-Acionamento de saida
 
+Acionamento de alimentação
 
-Acionamento de alimentaçõ
 
 
 Adendamento Iluminação Noturna  -> 4hs
@@ -32,6 +36,12 @@ Calibração de PH
 
 Acionamento Luz Azul
 
+
+Ajuste de data
+
+
+
+Alarme
 
 <br>
 
@@ -46,9 +56,11 @@ Funcionalidades do Projeto
 -Sensor de nível alto de água.
 -Alimentador automático.
 -Alarme de Temperatura, PH e Níveis de água fora da faixa estabelecida.
+-Modo de operação Automático e Manual
 -Programação de horários de acionamento de saídas.
 -Programação de horários de acionamento de iluminação.
 -Programação de horários de alimentação.
+-Ajuste de horário via ferramenta de setup.
 -Interface HTML5 para acompanhamento dos parâmetros do aquário, alteração entre modos manual e automático, acionamento remoto de saídas e iluminação.
 
 <br>
@@ -88,7 +100,7 @@ Não consegui 100% de sucesso na aferição em todas as leituras com a sonda pH,
 
 
 Alimentador
-Estou desenvolvendo com a impressora 3D um Alimentador automático para integração com o Aquadroid. Seu estágio atual está com uma boa perfomance com alimentos granulares, mas uma nova estrutura para alimentos em flocos ou grãos maiores está em análise.
+Estou desenvolvendo com a impressora 3D um Alimentador automático para integração com o Aquadroid. Seu estágio atual está com uma boa perfomance com alimentos granulares, mas será desenvolvida uma nova estrutura para alimentos em flocos ou em grãos maiores.
 
 
 <br>
@@ -97,7 +109,7 @@ Lista de componentes
 1 - Placa Automation Shield, a venda em nossa loja virtual.
 1 - Fonte industrial 12V x 3A (5A dependendo do consumo da faixa RGB utilizada).
 1 - RTC DS1307.
-1 - Shield Ethernet W5100, Atenção NÃO É compátivel o shield enc28j60.
+1 - Shield Ethernet W5100, Atenção NÃO É compátivel com o projeto o shield enc28j60.
 1 - Buzzer 5V.
 1 - Fita de Leds RGB com base de acrílico para sustentação, o ideal é usar 2 ou 3 faixas RGB com o comprimento do aquário. 
 1 - pH Sensor Kit, no projeto foi utilizado https://www.sparkfun.com/products/10972. -> Em ajustes finos.
@@ -259,10 +271,10 @@ Imagem api acionamento
 <br>
 Interface gráfica e testes finais de acesso ao sistema
 <br>
-A Interface gráfica de acesso ao sistema é uma interface Html5. O principal objetivo dessa abordagem é a facilidade inicial de portabilidade e execução em multiplos dispositivos, como Windows, Linux, e celulares com Android, desde que rode em um navegador com suporte para HTML5. Durante os testes em multiplos dispoisitivos, criei algumas páginas com tamanho fixo e outras "Resposinvas", sendo que para Painel decidi manter tamanho fixo (o equipamento deve ter uma resolução mínima de 640x480) e um arquivo de setup responsivo, que se adapta a qualquer dispositivo.
+A Interface gráfica de acesso ao sistema é uma interface Html5. O principal objetivo dessa abordagem é a facilidade inicial de portabilidade e execução em multiplos dispositivos, como Windows, Linux, e celulares com Android, desde que rode em um navegador com suporte para HTML5. O equipamento deve ter uma resolução mínima de 640x480. 
 
 
-Devido a restrições de acesso do iOS ao sistema de arquivos do dispositivo, o projeto abaixo não é compátivel com   iPhone/iPad, sendo necessária a criação de uma aplicativo nativo que integre com as APIs do projeto. Uma alternativa é hospedar os arquivos html em um servidor com WebServer Apache, IIS, entre outros e realizar o acesso pelo iPhone/iPad.
+Devido a restrições de acesso do iOS ao sistema de arquivos do dispositivo, o projeto abaixo não é compátivel com iPhone/iPad, sendo necessária a criação de uma aplicativo nativo que integre com as APIs do projeto. Uma alternativa é hospedar os arquivos html em um servidor com WebServer Apache, IIS, entre outros e realizar o acesso pelo iPhone/iPad.
 
 
 Configurações:
@@ -320,9 +332,78 @@ Vídeo do sistema.
 O código fonte é open source e está publicado no meu GitHub XYX. O projeto está em constante evolução, aceitando sugestões e críticas. 
 
 
-O projeto permite automação de aquários marinhos, mas de forma limitada. Projetos com monitoramento e controle simultâneos de PH, ORP, Densidade, Temperatura, Nível, TPA automático e outras funcionalidades exigem mais recursos de hardware e software, devendo usar como base um Arduino com mais recursos, como um Arduino Mega e uma expansão PCF8575.  A placa Automation Shield é compatível com o Arduino Mega, mas ela não possui conectores para conexão direta, sendo necessária a remoção do Arduino Nano e a conexão com o Arduino Mega por Jumpers (D3-P1, D5-P2, D6-P3, A0-S1, A1-S2, A2-S3 e A3-S4).
+O projeto nessa versão permite automação de aquários marinhos, mas de forma limitada. Projetos com monitoramento e controle simultâneos de PH, ORP, Densidade, Temperatura, Nível, TPA automático e outras funcionalidades exigem mais recursos de hardware e software, devendo usar como base um Arduino com mais recursos, como um Arduino Mega e uma expansão PCF8575.  A placa Automation Shield é compatível com o Arduino Mega, mas ela não possui conectores para conexão direta, sendo necessária a remoção do Arduino Nano e a conexão com o Arduino Mega por Jumpers (D3-P1, D5-P2, D6-P3, A0-S1, A1-S2, A2-S3,A3-S4 Power IN - 9V e GND-GND).
+
+
+Conexões do projeto para Arduino Mega
+
+
+
+
+
+
+Vídeo do projeto em funcionamento na bancada
+
+
+
+
+
 
 
 Abs
+
+----------------
+A placa Automation Shield permite a conexão com outras versões do Arduino.
+
+
+Conexões do Projeto
+
+
+
+
+
+
+Serão usados 9 jumpers para conexão  “Arduino Mega – Automation Shield”. 
+D3-P1
+D5-P2
+D6-P3
+A0-S1
+A1-S2
+A2-S3 
+A3-S4
+GND-GND
+Power Input– 9V
+
+
+Fotos da conexão
+
+
+
+
+
+Os jumpers que conectam no Arduino Mega e o Jumper de PowerInput  usam um pino Macho de uma barra de terminais.
+Foto Jumper com terminal
+
+
+
+
+
+Código Fonte
+
+
+
+
+
+
+Vídeo de testes
+
+
+
+
+
+
+A substituição do Arduino Nano pelo Arduino Mega permite a criação de projetos que necessitam de mais recursos de Software e Hardware. A placa Automation Shield incorpora funcionalidades úteis como alimentação regulada 9V para o Arduino, barra de terminais para alimentação 5V de outros Shields, saídas com relés, potência DC entre outros.
+
+
  
          
