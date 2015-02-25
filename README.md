@@ -332,7 +332,22 @@ Vídeo do sistema.
 O código fonte é open source e está publicado no meu GitHub XYX. O projeto está em constante evolução, aceitando sugestões e críticas. 
 
 
-O projeto nessa versão permite automação de aquários marinhos, mas de forma limitada. Projetos com monitoramento e controle simultâneos de PH, ORP, Densidade, Temperatura, Nível, TPA automático e outras funcionalidades exigem mais recursos de hardware e software, devendo usar como base um Arduino com mais recursos, como um Arduino Mega e uma expansão PCF8575.  A placa Automation Shield é compatível com o Arduino Mega, mas ela não possui conectores para conexão direta, sendo necessária a remoção do Arduino Nano e a conexão com o Arduino Mega por Jumpers (D3-P1, D5-P2, D6-P3, A0-S1, A1-S2, A2-S3,A3-S4 Power IN - 9V e GND-GND).
+O projeto na versão atual permite automação de aquários marinhos, mas de forma limitada. Projetos com monitoramento e controle simultâneos de PH, ORP, Densidade, Temperatura, Nível, TPA automático e outras funcionalidades exigem mais recursos de hardware e software, devendo usar como base um Arduino com mais recursos, como um Arduino Mega e uma expansão PCF8575.  A placa Automation Shield é compatível com o Arduino Mega, mas ela não possui conectores para conexão direta, sendo necessária a remoção do Arduino Nano e a conexão com o Arduino Mega por Jumpers.
+
+Conexões Arduino Mega - Automation Shield
+(D3-P1, D5-P2, D6-P3, A0-S1, A1-S2, A2-S3, A3-S4 VIN - 9V e GND-GND).
+
+Conexões Arduino Mega - RTC
+SDA 20 - SDA RTC
+SCL 21 - SCL RTC
+
+Conexões Arduino Mega - Ethernet Shield
+Utilizar um shield para Arduino Uno, ele é compátivel com o Arduino Mega e já possui os terminais para conexão
+
+As demais conexões devem ser feitas conforme diagrama de conexões do projeto.
+
+
+
 
 
 Conexões do projeto para Arduino Mega
@@ -350,60 +365,4 @@ Vídeo do projeto em funcionamento na bancada
 
 
 
-Abs
 
-----------------
-A placa Automation Shield permite a conexão com outras versões do Arduino.
-
-
-Conexões do Projeto
-
-
-
-
-
-
-Serão usados 9 jumpers para conexão  “Arduino Mega – Automation Shield”. 
-D3-P1
-D5-P2
-D6-P3
-A0-S1
-A1-S2
-A2-S3 
-A3-S4
-GND-GND
-Vin– 9V
-
-
-Fotos da conexão
-
-
-
-
-
-Os jumpers que conectam no Arduino Mega e o Jumper de PowerInput  usam um pino Macho de uma barra de terminais.
-Foto Jumper com terminal
-
-
-
-
-
-Código Fonte
-
-
-
-
-
-
-Vídeo de testes
-
-
-
-
-
-
-A substituição do Arduino Nano pelo Arduino Mega permite a criação de projetos que necessitam de mais recursos de Software e Hardware. A placa Automation Shield incorpora funcionalidades úteis como alimentação regulada 9V para o Arduino, barra de terminais para alimentação 5V de outros Shields, saídas com relés, potência DC entre outros.
-
-
- 
-         
