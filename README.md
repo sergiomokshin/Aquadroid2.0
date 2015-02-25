@@ -372,7 +372,7 @@ A1-S2
 A2-S3 
 A3-S4
 GND-GND
-Power Input– 9V
+Vin– 9V
 
 
 Fotos da conexão
