@@ -252,7 +252,7 @@ function HabilitaModo(Modo) {
 function MostraPopUpHorarioArduino(acao) {
     $('#modalHorarioArduino').modal('show')
 
-    $("#modalHorarioArduinoTitle").text("Alterar Horário Equipamento");
+    $("#modalHorarioArduinoTitle").text("Alterar Horario Equipamento");
 
     $("#DataArduino").val(RetornaData());
     $("#HoraArduino").val(RetornaHora());
