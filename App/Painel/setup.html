@@ -10,20 +10,36 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	<script src="Scripts/aquadroid.js"></script>
     <style>
- 	
+		
+		body{
+			background: url('Images/backPeixes.png');
+		}
+		
+		.titleAqua{
+			background-color:#FFCC00;
+		}
+		
+		table{
+			background-color:#FFFFFF;
+		}
+		
+		th{
+			background-color:#3E4551;
+			color: #FFFFFF;
+		}
 		
 	</style>
 </head>
 <body>
     <div class="container">
-        <p class="lead">
+        <p class="titleAqua">
             <a href="painel.html">
-                <img src="Images/aquadroid.png"></a>  Setup Aquadroid
+                <img src="Images/logoAqua.png"></a>
         </p>
         <table class="table table-bordered">
             <tr>
-                <td width="120px">Modo: </td>
-                <td colspan="2">
+                <th width="120px">Modo: </th>
+                <th colspan="2">
                     <label class="radio-inline">
                         <input type="radio" name="rdModo" id="rdModoA" value="A" onclick="EnviarComando('AUTOL')">
                         Automatico						
@@ -34,7 +50,7 @@
                     </label>
                     <img src="Images/icoLoading.gif" id="icoExeAUTOL">
                     <img src="Images/icoLoading.gif" id="icoExeAUTOD">
-                </td>
+                </th>
             <tr>
             <tr>
                 <td>Data: </td>
@@ -297,7 +313,7 @@
 		
         setInterval(function () {
             BuscaDados();
-        }, 10000);
+        }, 1000);
 
     });
 	
