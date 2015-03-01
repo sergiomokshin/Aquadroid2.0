@@ -35,7 +35,7 @@
         }        
         .painelTitle {
             width: 100%;
-            height: 100px;
+            height: 60px;
             background-color: #FFCC00;
         }
 
@@ -45,20 +45,21 @@
             -webkit-background-size: 100% 100%;
             background-size: 100% 100%;
             width: 100%;
-            height: 182px;
+            height: 162px;
         }
 
         .painelActions {
             width: 100%;
             height: 100px;
             background-color: #3E4551;
+            padding-top: 10px;
         }
 
         .painelAlarms {
             width: 100%;
-            height: 50px;
+            height: 40px;
             background-color: #FFCC00;
-            padding-top: 10px;
+            padding-top: 6px;
         }
 
         .Actions {
@@ -93,30 +94,23 @@
     <div class="container-full">
         <div class="container">
             <div class="row painelTitle">
-                <div class="col-xs-8"><img src="Images/logoAqua.png"></div>
-                <div class="col-xs-4">
+                <div class="col-xs-6"><img src="Images/logoAqua.png"></div>
+                <div class="col-xs-6">
                     <span class="Temperatura">Temp:</span>
                     <span class="Temperatura" id="Temperatura"></span>
-                </div>
-                <div class="col-xs-8">
-                    <span class="Modo">Modo:</span>
-                    <span class="Modo" id="Modo"></span>
-                </div>
-                <div class="col-xs-4">
-                    <span class="PH">PH:</span>
-                    <span class="PH" id="PH" >PH: 7.1</span>
-                </div>
-
+                    <span class="PH"> - PH:</span>
+                    <span class="PH" id="PH">PH: 7.1</span>
+                </div>                
             </div>
             <div class="row painelMidle">
                 <br><br>
+                <div class="col-xs-1"><a href="javascript:EnviarComandoAUTO()"><img id="imgAuto" src="Images/icoAuto.png"></a></div>
                 <div class="col-xs-1"><a href="setup.html"><img src="Images/icoSetup.png"></a></div>
                 <div class="col-xs-1"><a href="relatorios.html"><img src="Images/icoRelatorios.png"></a></div>
-                <div class="col-xs-7"><a href="alarme.html"><img src="Images/icoAlarme.png"></a></div>
-                <div class="col-xs-2 pull-right"><a href="javascript:EnviarComando('FEE1')"><img src="Images/icoAlimentador.png"></a></div>
+                <div class="col-xs-6"><a href="alarme.html"><img src="Images/icoAlarme.png"></a></div>
+                <div class="col-xs-3 pull-right"><a href="javascript:EnviarComando('FEE1')"><img src="Images/icoAlimentador.png"></a></div>
             </div>
             <div class="row painelActions">
-                <br>
                 <div class="col-xs-2">
                     <span class="Actions">Bomba</span><br>
                     <button type="button" id="S1" class="btn" onclick="EnviarComandoSaida('S1')" style="width:80px">Ligar</button>

@@ -56,11 +56,11 @@ function BindData(data) {
 
     if (data.Auto == 1) {
         $("#rdModoA").prop("checked", true);
-        $("#Modo").text("Automatico");
+        $("#imgAuto").attr("src", "Images/icoAuto.png")
     }
     else {
         $("#rdModoM").prop("checked", true);
-        $("#Modo").text("Manual");
+        $("#imgAuto").attr("src", "Images/icoManual.png")
     }
 
     $("#DataHW").text(RetornaData() + " " + RetornaHora());
@@ -200,6 +200,19 @@ function EnviarComando(saida) {
     $("#icoExec" + saida).show();
     Enviar("?" + saida);
 }
+
+function EnviarComandoAUTO() {
+
+
+    if (dadosRecebidos.Auto == 1) {
+        EnviarComando("AUTOD");
+    }
+    else {
+        EnviarComando("AUTOL");
+    }        
+}
+
+
 
 function Enviar(comando) {
 
