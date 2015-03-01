@@ -18,7 +18,7 @@ function BuscaDados() {
     .done(function (data) {
         console.log(data);
         BindData(data);
-        GravaLog();
+       // GravaLog();
         console.log("Busca dados executado com sucesso!");
     });
 }
@@ -382,9 +382,8 @@ function GravaLog() {
 
         var db = openDatabase('AquadroidReport', '1.0', 'Banco Aquadroid', 2 * 1024 * 1024);
         if (db) {
-            //dadosRecebidos.Temp, dadosRecebidos.PH
             db.transaction(function (tx) {
-                tx.executeSql("INSERT INTO DataLog (Data, Temperatura, PH) values (?, ?, ?)", [new Date(), '1', '2'])
+                tx.executeSql("INSERT INTO DataLog (Data, Temperatura, PH) values (?, ?, ?)", [new Date(), dadosRecebidos.Temp, dadosRecebidos.PH])
             });
         }
     }
@@ -448,6 +447,9 @@ function RetornaHora() {
 
 
 function MostraRelatorios() {
+
+    console.log("MostraRelatorios");
+
     var db = openDatabase('AquadroidReport', '1.0', 'Banco Aquadroid', 2 * 1024 * 1024);
     if (!db) {
         alert('Seu browser não suporta WebSql Database !');
