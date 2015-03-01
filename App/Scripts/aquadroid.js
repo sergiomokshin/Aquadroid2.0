@@ -55,10 +55,12 @@ function BindData(data) {
 
 
     if (data.Auto == 1) {
-        $("#rdModoA").prop("checked", true)
+        $("#rdModoA").prop("checked", true);
+        $("#Modo").text("Automatico");
     }
     else {
-        $("#rdModoM").prop("checked", true)
+        $("#rdModoM").prop("checked", true);
+        $("#Modo").text("Manual");
     }
 
     $("#DataHW").text(RetornaData() + " " + RetornaHora());
@@ -83,77 +85,77 @@ function BindData(data) {
     }
 
     if (data.S1 == 1) {
-        $("#S1").html('Ligada');
+        $("#S1").html('On');
         $('#S1').addClass('btn btn-success');
     }
     else {
-        $("#S1").html('Desligada');
+        $("#S1").html('Off');
         $('#S1').addClass('btn btn-danger');
     }
 
     if (data.S2 == 1) {
-        $("#S2").html('Ligada');
+        $("#S2").html('On');
         $('#S2').addClass('btn btn-success');
     }
     else {
-        $("#S2").html('Desligada');
+        $("#S2").html('Off');
         $('#S2').addClass('btn btn-danger');
     }
 
     if (data.S3 == 1) {
-        $("#S3").html('Ligada');
+        $("#S3").html('On');
         $('#S3').addClass('btn btn-success');
     }
     else {
-        $("#S3").html('Desligada');
+        $("#S3").html('Off');
         $('#S3').addClass('btn btn-danger');
     }
     $("#AgeS3").text(data.AgeS3HrI + ":00 ate " + data.AgeS3HrF + ":59");
 
     if (data.S4 == 1) {
-        $("#S4").html('Ligada');
+        $("#S4").html('On');
         $('#S4').addClass('btn btn-success');
     }
     else {
-        $("#S4").html('Desligada');
+        $("#S4").html('Off');
         $('#S4').addClass('btn btn-danger');
     }
     $("#AgeS4").text(data.AgeS4HrI + ":00 ate " + data.AgeS4HrF + ":59");
 
 
     if (data.Red == 255 && data.Green == 255 && data.Blue == 255) {
-        $("#WHI").text("Ligada");
+        $("#WHI").text("On");
         $('#WHI').addClass('btn btn-success');
     }
     else {
-        $("#WHI").text("DesLigada");
+        $("#WHI").text("Off");
         $('#WHI').addClass('btn btn-danger');
     }
 
     if (data.Red == 0 && data.Green == 0 && data.Blue > 0) {
-        $("#BLU").text("Ligada");
+        $("#BLU").text("On");
         $('#BLU').addClass('btn btn-success');
     }
     else {
-        $("#BLU").text("DesLigada");
+        $("#BLU").text("Off");
         $('#BLU').addClass('btn btn-danger');
     }
 
     if (data.Red > 0 && data.Green == 0 && data.Blue == 0) {
-        $("#RED").text("Ligada");
+        $("#RED").text("On");
         $('#RED').addClass('btn btn-success');
     }
     else {
-        $("#RED").text("DesLigada");
+        $("#RED").text("Off");
         $('#RED').addClass('btn btn-danger');
     }
 
     if (data.Red == 0 && data.Green > 0 && data.Blue == 0) {
-        $("#GRE").text("Ligada");
+        $("#GRE").text("On");
         $('#GRE').addClass('btn btn-success');
     }
     else {
-        $("#GRE").text("DesLigada");
+        $("#GRE").text("Off");
         $('#GRE').addClass('btn btn-danger');
     }
 
@@ -171,7 +173,7 @@ function EnviarComandoSaida(saida) {
     $("#icoExec" + saida).show();
     var statusAtual = $("#" + saida).html();
     var cmd = "?" + saida;
-    if (statusAtual == "Ligada") {
+    if (statusAtual == "On") {
         cmd += "D";
     }
     else {
@@ -185,7 +187,7 @@ function EnviarComandoRGB(saida) {
     $("#icoExec" + saida).show();
     var statusAtual = $("#" + saida).html();
     var cmd = "?";
-    if (statusAtual == "Ligada") {
+    if (statusAtual == "On") {
         cmd += "RGBOFF";
     }
     else {

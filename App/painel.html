@@ -16,22 +16,30 @@
             background: #3E4551;
         }
 
-        .temp {
+        .Temperatura {
             color: #FFFFFF;
             font-family: "Arial";
-            font-size: 30px;
-        }
-        .ph {
-            color: #FFFFFF;
+            font-size: 25px;
         }
 
+        .PH {
+            color: #FFFFFF;
+            font-family: "Arial";
+            font-size: 25px;
+        }
+
+        .Modo {
+            color: #FFFFFF;
+            font-family: "Arial";
+            font-size: 20px;
+        }        
         .painelTitle {
             width: 100%;
             height: 100px;
             background-color: #FFCC00;
         }
 
-        .painelMidle {            
+        .painelMidle {
             background: url(Images/backMidle.png);
             -moz-background-size: 100% 100%;
             -webkit-background-size: 100% 100%;
@@ -50,9 +58,16 @@
             width: 100%;
             height: 50px;
             background-color: #FFCC00;
+            padding-top: 10px;
         }
 
         .Actions {
+            color: #FFFFFF;
+            font-family: "Arial";
+            font-size: 20px;
+        }
+
+        .DateHW {
             color: #FFFFFF;
             font-family: "Arial";
             font-size: 20px;
@@ -80,50 +95,63 @@
             <div class="row painelTitle">
                 <div class="col-xs-8"><img src="Images/logoAqua.png"></div>
                 <div class="col-xs-4">
-                    <span class="temp">Temp: 26</span>
-                    <br>
-                    <span class="temp">PH: 7.1</span>
+                    <span class="Temperatura">Temp:</span>
+                    <span class="Temperatura" id="Temperatura"></span>
                 </div>
+                <div class="col-xs-8">
+                    <span class="Modo">Modo:</span>
+                    <span class="Modo" id="Modo"></span>
+                </div>
+                <div class="col-xs-4">
+                    <span class="PH">PH:</span>
+                    <span class="PH" id="PH" >PH: 7.1</span>
+                </div>
+
             </div>
             <div class="row painelMidle">
                 <br><br>
                 <div class="col-xs-1"><a href="setup.html"><img src="Images/icoSetup.png"></a></div>
                 <div class="col-xs-1"><a href="relatorios.html"><img src="Images/icoRelatorios.png"></a></div>
                 <div class="col-xs-7"><a href="alarme.html"><img src="Images/icoAlarme.png"></a></div>
-                <div class="col-xs-2 pull-right"><a href="javascript:EnviarComando('FEE1')"><img src="Images/icoAlimentador.png"></a></div>                                    
+                <div class="col-xs-2 pull-right"><a href="javascript:EnviarComando('FEE1')"><img src="Images/icoAlimentador.png"></a></div>
             </div>
             <div class="row painelActions">
                 <br>
                 <div class="col-xs-2">
-                    <span class="Actions">Saida 1</span>
-                    <button type="button" id="S1" class="btn" onclick="EnviarComandoSaida('S1')">Ligar</button>
+                    <span class="Actions">Bomba</span><br>
+                    <button type="button" id="S1" class="btn" onclick="EnviarComandoSaida('S1')" style="width:80px">Ligar</button>
                 </div>
                 <div class="col-xs-2">
-                    <span class="Actions">Saida 2</span>
-                    <button type="button" id="S2" class="btn" onclick="EnviarComandoSaida('S2')">Ligar</button>
+                    <span class="Actions">Termo</span><br>
+                    <button type="button" id="S2" class="btn" onclick="EnviarComandoSaida('S2')" style="width:80px">Ligar</button>
                 </div>
                 <div class="col-xs-2">
-                    <span class="Actions">Saida 3</span>
-                    <button type="button" id="S3" class="btn" onclick="EnviarComandoSaida('S3')">Ligar</button>
+                    <span class="Actions">Luz</span><br>
+                    <button type="button" id="S3" class="btn" onclick="EnviarComandoSaida('S3')" style="width:80px">Ligar</button>
                 </div>
                 <div class="col-xs-2">
-                    <span class="Actions">Saida 4</span>
-                    <button type="button" id="S4" class="btn" onclick="EnviarComandoSaida('S4')">Ligar</button>
+                    <span class="Actions">Aux</span><br>
+                    <button type="button" id="S4" class="btn" onclick="EnviarComandoSaida('S4')" style="width:80px">Ligar</button>
                 </div>
                 <div class="col-xs-2">
-                    <span class="Actions">Branco</span>
-                    <button type="button" id="WHI" class="btn" onclick="EnviarComandoRGB('WHI')">Ligar</button>
+                    <span class="Actions">Branco</span><br>
+                    <button type="button" id="WHI" class="btn" onclick="EnviarComandoRGB('WHI')" style="width:80px">Ligar</button>
                 </div>
                 <div class="col-xs-2">
-                    <span class="Actions">Azul</span>
-                    <button type="button" id="BLU" class="btn" onclick="EnviarComandoRGB('BLU')">Ligar</button>
+                    <span class="Actions">Azul</span><br>
+                    <button type="button" id="BLU" class="btn" onclick="EnviarComandoRGB('BLU')" style="width:80px">Ligar</button>
                 </div>
-                
-                
+
+
             </div>
             <div class="row painelAlarms">
-                
-                
+                <div class="col-xs-7">
+                    <span class="Alarms" id="Alarms"></span><br>
+                </div>
+                <div class="col-xs-5">
+                    <span class="DateHW" id="DataHW"></span><br>
+                </div>
+
 
             </div>
         </div>
@@ -131,7 +159,7 @@
 </body>
 <script>
 
-    $(document).ready(function () {        
+    $(document).ready(function () {
         BuscaDados();
 
 
