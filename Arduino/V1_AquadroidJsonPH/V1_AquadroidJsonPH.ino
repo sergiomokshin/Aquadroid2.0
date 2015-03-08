@@ -127,6 +127,7 @@ void setup() {
   pinMode(A2, OUTPUT);
   pinMode(A3, OUTPUT);
   pinMode(PIN_SAIDA_BUZZ, OUTPUT);
+  pinMode(PIN_FEEDER, OUTPUT);  
 
   pinMode(PIN_NIVEL_BAIXO, INPUT);
   pinMode(PIN_NIVEL_ALTO, INPUT);
@@ -703,6 +704,20 @@ void GetTemp() {
 void Alimenta()
 {
 
+  digitalWrite(PIN_FEEDER, HIGH);
+  delay(4000);
+  wdt_reset(); //Reseta watch dog
+  delay(4000);
+  wdt_reset(); //Reseta watch dog
+  delay(1000);  
+  digitalWrite(PIN_FEEDER, LOW);  
+  buzzer = 1;
+  Buzzer();
+}
+
+void AlimentaVersaoServo()
+{
+
   myservo.attach(PIN_FEEDER);
 
 
@@ -725,7 +740,9 @@ void Alimenta()
   //  BuzzerConfirma();
 }
 
-void AlimentaServoSemFim()
+
+
+void AlimentaVersaoServoSemFim()
 {
 
   myservo.attach(PIN_FEEDER);
