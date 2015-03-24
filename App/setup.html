@@ -9,14 +9,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="Scripts/aquadroid.js"></script>
+	<link rel="stylesheet" href="css/aquadroid.css">
+	
     <style>
-        body {
-            background: url('Images/backPeixes.png');
-        }
-
-        .titleAqua {
-            background-color: #FFCC00;
-        }
 
         table {
             background-color: #FFFFFF;
@@ -31,8 +26,8 @@
 <body>
     <div class="container">
         <div class="row titleAqua">
-            <div class="col-xs-10"><img src="Images/logoAqua.png"></div>
-            <div class="col-xs-2"><a href="painel.html"><img src="Images/icoPainel.jpg"></a></div>
+            <div class="col-xs-9"><img src="img/logo.png"></div>
+            <div class="col-xs-3"><a href="painel.html"><img src="img/Painel.png" width="140"></a></div>
         </div>
         <div class="row">
             <table class="table table-bordered">
@@ -47,8 +42,8 @@
                             <input type="radio" name="rdModo" id="rdModoM" value="M" onclick="EnviarComando('AUTOD')">
                             Manual
                         </label>
-                        <img src="Images/icoLoading.gif" id="icoExeAUTOL">
-                        <img src="Images/icoLoading.gif" id="icoExeAUTOD">
+                        <img src="img/icoLoading.gif" id="icoExeAUTOL">
+                        <img src="img/icoLoading.gif" id="icoExeAUTOD">
                     </th>
                 <tr>
                 <tr>
@@ -87,7 +82,7 @@
                     <td>Saida 1</td>
                     <td width="150px">
                         <button type="button" id="S1" class="btn" onclick="EnviarComandoSaida('S1')">Ligar</button>
-                        <img src="Images/icoLoading.gif" id="icoExecS1">
+                        <img src="img/icoLoading.gif" id="icoExecS1">
                     </td>
                     <td colspan="2"></td>
                 </tr>
@@ -95,7 +90,7 @@
                     <td>Saida 2</td>
                     <td>
                         <button type="button" id="S2" class="btn" onclick="EnviarComandoSaida('S2')">Ligar</button>
-                        <img src="Images/icoLoading.gif" id="icoExecS2">
+                        <img src="img/icoLoading.gif" id="icoExecS2">
                     </td>
                     <td colspan="2"></td>
                 </tr>
@@ -103,7 +98,7 @@
                     <td>Saida 3</td>
                     <td>
                         <button type="button" id="S3" class="btn btn-danger" onclick="EnviarComandoSaida('S3')">Ligar</button>
-                        <img src="Images/icoLoading.gif" id="icoExecS3">
+                        <img src="img/icoLoading.gif" id="icoExecS3">
                     </td>
                     <td width="50px">
                         <button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeS3" onclick="MostraPopUpPeriodo('S3')">
@@ -118,7 +113,7 @@
                     <td>Saida 4</td>
                     <td>
                         <button type="button" id="S4" class="btn" onclick="EnviarComandoSaida('S4')">Ligar</button>
-                        <img src="Images/icoLoading.gif" id="icoExecS4">
+                        <img src="img/icoLoading.gif" id="icoExecS4">
                     </td>
                     <td>
                         <button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeS4" onclick="MostraPopUpPeriodo('S4')">
@@ -133,7 +128,7 @@
                     <td>RGB White</td>
                     <td>
                         <button type="button" id="WHI" class="btn" onclick="EnviarComandoRGB('WHI')">Ligar</button>
-                        <img src="Images/icoLoading.gif" id="icoExecWHI">
+                        <img src="img/icoLoading.gif" id="icoExecWHI">
                     </td>
                     <td>
                         <button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeWHI" onclick="MostraPopUpPeriodo('WHI')">
@@ -148,7 +143,7 @@
                     <td>RGB Blue</td>
                     <td>
                         <button type="button" id="BLU" class="btn" onclick="EnviarComandoRGB('BLU')">Ligar</button>
-                        <img src="Images/icoLoading.gif" id="icoExecBLU">
+                        <img src="img/icoLoading.gif" id="icoExecBLU">
                     </td>
                     <td>
                         <button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeBLU" onclick="MostraPopUpPeriodo('BLU')">
@@ -163,7 +158,7 @@
                     <td>RGB Green</td>
                     <td>
                         <button type="button" id="GRE" class="btn" onclick="EnviarComandoRGB('GRE')">Ligar</button>
-                        <img src="Images/icoLoading.gif" id="icoExecGRE">
+                        <img src="img/icoLoading.gif" id="icoExecGRE">
                     </td>
                     <td colspan="2"></td>
                 </tr>
@@ -171,7 +166,7 @@
                     <td>RGB RED</td>
                     <td>
                         <button type="button" id="RED" class="btn" onclick="EnviarComandoRGB('RED')">Ligar</button>
-                        <img src="Images/icoLoading.gif" id="icoExecRED">
+                        <img src="img/icoLoading.gif" id="icoExecRED">
                     </td>
                     <td colspan="2"></td>
                 </tr>
@@ -179,7 +174,7 @@
                     <td>Alimentacao 1</td>
                     <td>
                         <button type="button" id="Alimenta1" class="btn btn-warning" onclick="EnviarComando('FEE1')">Alimentar</button>
-                        <img src="Images/icoLoading.gif" id="icoExecFEE1">
+                        <img src="img/icoLoading.gif" id="icoExecFEE1">
                     </td>
                     <td>
                         <button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeFEE1" onclick="MostraPopUpHorario('FEE1')">
@@ -194,7 +189,7 @@
                     <td>Alimentacao 2</td>
                     <td>
                         <button type="button" id="Alimenta2" class="btn btn-warning" onclick="EnviarComando('FEE2')">Alimentar</button>
-                        <img src="Images/icoLoading.gif" id="icoExecFEE2">
+                        <img src="img/icoLoading.gif" id="icoExecFEE2">
                     </td>
                     <td>
                         <button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeFEE2" onclick="MostraPopUpHorario('FEE2')">
@@ -209,7 +204,7 @@
                     <td>PH</td>
                     <td colspan="3">
                         <button type="button" id="PH4" class="btn btn-info" onclick="EnviarComando('PHC')">Calibrar</button>
-                        <img src="Images/icoLoading.gif" id="icoExecPHC">
+                        <img src="img/icoLoading.gif" id="icoExecPHC">
                     </td>
                 </tr>
             </table>

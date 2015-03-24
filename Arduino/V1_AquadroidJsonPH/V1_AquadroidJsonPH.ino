@@ -133,10 +133,10 @@ void setup() {
   pinMode(PIN_NIVEL_ALTO, INPUT);
 
   //Inicializando placa com valores armazenados na FLASH Memory
-  digitalWrite(A0, EEPROM.read(MemSaida1));
-  digitalWrite(A1, EEPROM.read(MemSaida2));
-  digitalWrite(A2, EEPROM.read(MemSaida3));
-  digitalWrite(A3, EEPROM.read(MemSaida4));
+  digitalWrite(A0, EEPROM.read(MemSaida4));
+  digitalWrite(A1, EEPROM.read(MemSaida3));
+  digitalWrite(A2, EEPROM.read(MemSaida2));
+  digitalWrite(A3, EEPROM.read(MemSaida1));
   ValueSaveAuto = EEPROM.read(MemAuto);
   ValueSaida3HrI = EEPROM.read(MemSaida3HrI);
   ValueSaida3HrF = EEPROM.read(MemSaida3HrF);
@@ -245,45 +245,45 @@ void WebServer() {
 
 
           if (readString.indexOf("?S1L") > 0) {
-            digitalWrite(A0, HIGH);
+            digitalWrite(A3, HIGH);
             EEPROM.write(MemSaida1, 1);
             buzzer = 1;
           }
           if (readString.indexOf("?S1D") > 0) {
-            digitalWrite(A0, LOW);
+            digitalWrite(A3, LOW);
             EEPROM.write(MemSaida1, 0);
             buzzer = 2;
           }
 
           if (readString.indexOf("?S2L") > 0) {
-            digitalWrite(A1, HIGH);
+            digitalWrite(A2, HIGH);
             EEPROM.write(MemSaida2, 1);
             buzzer = 1;
           }
           if (readString.indexOf("?S2D") > 0) {
-            digitalWrite(A1, LOW);
+            digitalWrite(A2, LOW);
             EEPROM.write(MemSaida2, 0);
             buzzer = 2;
           }
 
           if (readString.indexOf("?S3L") > 0) {
-            digitalWrite(A2, HIGH);
+            digitalWrite(A1, HIGH);
             EEPROM.write(MemSaida3, 1);
             buzzer = 1;
           }
           if (readString.indexOf("?S3D") > 0) {
-            digitalWrite(A2, LOW);
+            digitalWrite(A1, LOW);
             EEPROM.write(MemSaida3, 0);
             buzzer = 2;
           }
 
           if (readString.indexOf("?S4L") > 0) {
-            digitalWrite(A3, HIGH);
+            digitalWrite(A0, HIGH);
             EEPROM.write(MemSaida4, 1);
             buzzer = 1;
           }
           if (readString.indexOf("?S4D") > 0) {
-            digitalWrite(A3, LOW);
+            digitalWrite(A0, LOW);
             EEPROM.write(MemSaida4, 0);
             buzzer = 2;
           }
@@ -450,10 +450,10 @@ void WebServer() {
 
 void SendResponse(EthernetClient client) {
 
-  int S1 = digitalRead(A0);
-  int S2 = digitalRead(A1);
-  int S3 = digitalRead(A2);
-  int S4 = digitalRead(A3);
+  int S1 = digitalRead(A3);
+  int S2 = digitalRead(A2);
+  int S3 = digitalRead(A1);
+  int S4 = digitalRead(A0);
 
   int NIVEL_BAIXO = 0;// digitalRead(PIN_NIVEL_BAIXO);
   int NIVEL_ALTO = 0;//digitalRead(PIN_NIVEL_ALTO);
@@ -549,32 +549,32 @@ void ModoAuto() {
   if (ValueSaveAuto == 1)
   {        
     //Saida 1 -> Atribui valor default de modo automatico para saida 1 (Saida 1 nao tem agedamento -> Bomba) - Para alterar status altere para modo manual e envie comando de desligamento
-    digitalWrite(A0, ValueSaida1ModoAuto);
+    digitalWrite(A3, ValueSaida1ModoAuto);
     
     //Saida 2-> Atribui valor default de modo automatico para saida 2 (Saida 2 nao tem agedamento -> Termostato) - Para alterar status altere para modo manual e envie comando de desligamento
-    digitalWrite(A1, ValueSaida2ModoAuto);    
+    digitalWrite(A2, ValueSaida2ModoAuto);    
         
     //Saida 3
     if (ValueSaida3HrI <= hour && ValueSaida3HrF >= hour)
     {
-      digitalWrite(A2, HIGH);
+      digitalWrite(A1, HIGH);
       EEPROM.write(MemSaida3, 1);
     }
     else
     {
-      digitalWrite(A2, LOW);
+      digitalWrite(A1, LOW);
       EEPROM.write(MemSaida3, 0);
     }
 
     //Saida 4
     if (ValueSaida4HrI <= hour && ValueSaida4HrF >= hour)
     {
-      digitalWrite(A3, HIGH);
+      digitalWrite(A0, HIGH);
       EEPROM.write(MemSaida4, 1);
     }
     else
     {
-      digitalWrite(A3, LOW);
+      digitalWrite(A0, LOW);
       EEPROM.write(MemSaida4, 0);
     }
 
