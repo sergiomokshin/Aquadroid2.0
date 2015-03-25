@@ -1,168 +1,85 @@
-﻿
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/aquadroid.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="Scripts/aquadroid.js"></script>
-    <style>
-        body {
-            background: #3E4551;
-        }
+    <title>Aquadroid</title>
+    <script>
 
-        .Temperatura {
-            color: #FFFFFF;
-            font-family: "Arial";
-            font-size: 25px;
-        }
-
-        .PH {
-            color: #FFFFFF;
-            font-family: "Arial";
-            font-size: 25px;
-        }
-
-        .Modo {
-            color: #FFFFFF;
-            font-family: "Arial";
-            font-size: 20px;
-        }        
-        .painelTitle {
-            width: 100%;
-            height: 60px;
-            background-color: #FFCC00;
-        }
-
-        .painelMidle {
-            background: url(Images/backMidle.png);
-            -moz-background-size: 100% 100%;
-            -webkit-background-size: 100% 100%;
-            background-size: 100% 100%;
-            width: 100%;
-            height: 162px;
-        }
-
-        .painelActions {
-            width: 100%;
-            height: 100px;
-            background-color: #3E4551;
-            padding-top: 10px;
-        }
-
-        .painelAlarms {
-            width: 100%;
-            height: 40px;
-            background-color: #FFCC00;
-            padding-top: 6px;
-        }
-
-        .Actions {
-            color: #FFFFFF;
-            font-family: "Arial";
-            font-size: 20px;
-        }
-
-        .DateHW {
-            color: #FFFFFF;
-            font-family: "Arial";
-            font-size: 20px;
-        }
+        $(document).ready(function () {
+            BuscaDados();
 
 
-        .container-full {
-            margin: 0 auto;
-            width: 100%;
-            height: 100%;
-        }
+            setInterval(function () {
+                BuscaDados();
+            }, 1000);
 
-        .container-image {
-            margin: 0 auto;
-            width: 100%;
-            height: 100%;
-            background: url('Images/BackGround.png') no-repeat center top;
-            background-size: 100% auto;
-        }
-    </style>
+        });
+
+
+    </script>
 </head>
 <body>
-    <div class="container-full">
-        <div class="container">
-            <div class="row painelTitle">
-                <div class="col-xs-6"><img src="Images/logoAqua.png"></div>
-                <div class="col-xs-6">
-                    <span class="Temperatura">Temp:</span>
-                    <span class="Temperatura" id="Temperatura"></span>
-                    <span class="PH"> - PH:</span>
-                    <span class="PH" id="PH">PH: 7.1</span>
-                </div>                
-            </div>
-            <div class="row painelMidle">
-                <br><br>
-                <div class="col-xs-1"><a href="javascript:EnviarComandoAUTO()"><img id="imgAuto" src="Images/icoAuto.png"></a></div>
-                <div class="col-xs-1"><a href="setup.html"><img src="Images/icoSetup.png"></a></div>
-                <div class="col-xs-1"><a href="relatorios.html"><img src="Images/icoRelatorios.png"></a></div>
-                <div class="col-xs-6"><a href="alarme.html"><img src="Images/icoAlarme.png"></a></div>
-                <div class="col-xs-3 pull-right"><a href="javascript:EnviarComando('FEE1')"><img src="Images/icoAlimentador.png"></a></div>
-            </div>
-            <div class="row painelActions">
-                <div class="col-xs-2">
-                    <span class="Actions">Bomba</span><br>
-                    <button type="button" id="S1" class="btn" onclick="EnviarComandoSaida('S1')" style="width:80px">Ligar</button>
-                </div>
-                <div class="col-xs-2">
-                    <span class="Actions">Termo</span><br>
-                    <button type="button" id="S2" class="btn" onclick="EnviarComandoSaida('S2')" style="width:80px">Ligar</button>
-                </div>
-                <div class="col-xs-2">
-                    <span class="Actions">Luz</span><br>
-                    <button type="button" id="S3" class="btn" onclick="EnviarComandoSaida('S3')" style="width:80px">Ligar</button>
-                </div>
-                <div class="col-xs-2">
-                    <span class="Actions">Aux</span><br>
-                    <button type="button" id="S4" class="btn" onclick="EnviarComandoSaida('S4')" style="width:80px">Ligar</button>
-                </div>
-                <div class="col-xs-2">
-                    <span class="Actions">Branco</span><br>
-                    <button type="button" id="WHI" class="btn" onclick="EnviarComandoRGB('WHI')" style="width:80px">Ligar</button>
-                </div>
-                <div class="col-xs-2">
-                    <span class="Actions">Azul</span><br>
-                    <button type="button" id="BLU" class="btn" onclick="EnviarComandoRGB('BLU')" style="width:80px">Ligar</button>
-                </div>
+    <div class="container">
 
-
-            </div>
-            <div class="row painelAlarms">
-                <div class="col-xs-7">
-                    <span class="Alarms" id="Alarms"></span><br>
-                </div>
-                <div class="col-xs-5">
-                    <span class="DateHW" id="DataHW"></span><br>
-                </div>
-
-
+        <div class="row row1">
+            <div class="col-xs-6 logo"><img src="img/logo.png"></div>
+            <div class="col-xs-6 status">
+                <span class="value" id="DataHW"></span>
+                <br />
+                <span class="field">Temp:</span>
+                <span class="value" id="Temperatura">23°</span>
+                <span class="field">pH:</span>
+                <span class="value" id="PH">7.0</span>
+                <span class="field">Auto:</span>
+                <span class="value" id="Modo"></span>
             </div>
         </div>
-    </div>
+
+        <div class="row row2">
+            <div class="col-xs-3">
+                <button id="btSaida1" type="button" onclick="EnviarComandoSaida('S1')" class="btn btn-on">Saída 1<span id="S1"></span></button>
+            </div>
+            <div class="col-xs-3">
+                <button id="btSaida2" type="button" onclick="EnviarComandoSaida('S2')" class="btn btn-on">Saída 2<span id="S2"></span></button>
+            </div>
+            <div class="col-xs-3">
+                <button id="btSaida3" type="button" onclick="EnviarComandoSaida('S3')" class="btn btn-on">Saída 3<span id="S3"></span></button>
+            </div>
+            <div class="col-xs-3">
+                <button id="btSaida4" type="button" onclick="EnviarComandoSaida('S4')" class="btn btn-on">Saída 4<span id="S4"></span></button>
+            </div>
+        </div>
+
+        <div class="row row3">
+
+            <div class="col-xs-6">
+                <span class="field">Alarmes:</span>
+                <span class="value">Não configurado</span>
+            </div>
+
+            <div class="col-xs-6">
+                <div class="col-xs-6">
+                    <a href="javascript:EnviarComando('FEE1')"><img src="Img/icoAlimentador.png"></a>
+                </div>
+                <div class="col-xs-3">
+                    <a href="javascript:EnviarComandoAUTO()"><img id="imgAuto" src="Images/icoAuto.png"></a>
+                </div>
+                <div class="col-xs-2">
+                    <a href="setup.html"><img src="Img/icoSetup.png"></a>
+                </div>
+
+            </div>
+            </div>
+        </div>
+
+
 </body>
-<script>
 
-    $(document).ready(function () {
-        BuscaDados();
-
-
-        setInterval(function () {
-            BuscaDados();
-        }, 1000);
-
-    });
-
-
-</script>
-<html>
+</html>

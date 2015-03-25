@@ -56,11 +56,13 @@ function BindData(data) {
 
     if (data.Auto == 1) {
         $("#rdModoA").prop("checked", true);
-        $("#imgAuto").attr("src", "Images/icoAuto.png")
+        $("#imgAuto").attr("src", "Img/icoAuto.png")
+        $("#Modo").text("ON");
     }
     else {
         $("#rdModoM").prop("checked", true);
-        $("#imgAuto").attr("src", "Images/icoManual.png")
+        $("#imgAuto").attr("src", "Img/icoManual.png")
+        $("#Modo").text("OFF");
     }
 
     $("#DataHW").text(RetornaData() + " " + RetornaHora());

@@ -1,0 +1,168 @@
+﻿
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="Scripts/aquadroid.js"></script>
+    <style>
+        body {
+            background: #3E4551;
+        }
+
+        .Temperatura {
+            color: #FFFFFF;
+            font-family: "Arial";
+            font-size: 25px;
+        }
+
+        .PH {
+            color: #FFFFFF;
+            font-family: "Arial";
+            font-size: 25px;
+        }
+
+        .Modo {
+            color: #FFFFFF;
+            font-family: "Arial";
+            font-size: 20px;
+        }        
+        .painelTitle {
+            width: 100%;
+            height: 60px;
+            background-color: #FFCC00;
+        }
+
+        .painelMidle {
+            background: url(Images/backMidle.png);
+            -moz-background-size: 100% 100%;
+            -webkit-background-size: 100% 100%;
+            background-size: 100% 100%;
+            width: 100%;
+            height: 162px;
+        }
+
+        .painelActions {
+            width: 100%;
+            height: 100px;
+            background-color: #3E4551;
+            padding-top: 10px;
+        }
+
+        .painelAlarms {
+            width: 100%;
+            height: 40px;
+            background-color: #FFCC00;
+            padding-top: 6px;
+        }
+
+        .Actions {
+            color: #FFFFFF;
+            font-family: "Arial";
+            font-size: 20px;
+        }
+
+        .DateHW {
+            color: #FFFFFF;
+            font-family: "Arial";
+            font-size: 20px;
+        }
+
+
+        .container-full {
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+        }
+
+        .container-image {
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+            background: url('Images/BackGround.png') no-repeat center top;
+            background-size: 100% auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-full">
+        <div class="container">
+            <div class="row painelTitle">
+                <div class="col-xs-6"><img src="Images/logoAqua.png"></div>
+                <div class="col-xs-6">
+                    <span class="Temperatura">Temp:</span>
+                    <span class="Temperatura" id="Temperatura"></span>
+                    <span class="PH"> - PH:</span>
+                    <span class="PH" id="PH">PH: 7.1</span>
+                </div>                
+            </div>
+            <div class="row painelMidle">
+                <br><br>
+                <div class="col-xs-1"><a href="javascript:EnviarComandoAUTO()"><img id="imgAuto" src="Images/icoAuto.png"></a></div>
+                <div class="col-xs-1"><a href="setup.html"><img src="Images/icoSetup.png"></a></div>
+                <div class="col-xs-1"><a href="relatorios.html"><img src="Images/icoRelatorios.png"></a></div>
+                <div class="col-xs-6"><a href="alarme.html"><img src="Images/icoAlarme.png"></a></div>
+                <div class="col-xs-3 pull-right"><a href="javascript:EnviarComando('FEE1')"><img src="Images/icoAlimentador.png"></a></div>
+            </div>
+            <div class="row painelActions">
+                <div class="col-xs-2">
+                    <span class="Actions">Bomba</span><br>
+                    <button type="button" id="S1" class="btn" onclick="EnviarComandoSaida('S1')" style="width:80px">Ligar</button>
+                </div>
+                <div class="col-xs-2">
+                    <span class="Actions">Termo</span><br>
+                    <button type="button" id="S2" class="btn" onclick="EnviarComandoSaida('S2')" style="width:80px">Ligar</button>
+                </div>
+                <div class="col-xs-2">
+                    <span class="Actions">Luz</span><br>
+                    <button type="button" id="S3" class="btn" onclick="EnviarComandoSaida('S3')" style="width:80px">Ligar</button>
+                </div>
+                <div class="col-xs-2">
+                    <span class="Actions">Aux</span><br>
+                    <button type="button" id="S4" class="btn" onclick="EnviarComandoSaida('S4')" style="width:80px">Ligar</button>
+                </div>
+                <div class="col-xs-2">
+                    <span class="Actions">Branco</span><br>
+                    <button type="button" id="WHI" class="btn" onclick="EnviarComandoRGB('WHI')" style="width:80px">Ligar</button>
+                </div>
+                <div class="col-xs-2">
+                    <span class="Actions">Azul</span><br>
+                    <button type="button" id="BLU" class="btn" onclick="EnviarComandoRGB('BLU')" style="width:80px">Ligar</button>
+                </div>
+
+
+            </div>
+            <div class="row painelAlarms">
+                <div class="col-xs-7">
+                    <span class="Alarms" id="Alarms"></span><br>
+                </div>
+                <div class="col-xs-5">
+                    <span class="DateHW" id="DataHW"></span><br>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    $(document).ready(function () {
+        BuscaDados();
+
+
+        setInterval(function () {
+            BuscaDados();
+        }, 1000);
+
+    });
+
+
+</script>
+<html>
