@@ -1,3 +1,4 @@
+//var ipArduino = 'http://186.220.99.147:8099';
 var ipArduino = 'http://192.168.0.201';
 
 var dadosRecebidos;
