@@ -166,7 +166,7 @@ void setup() {
   // setDateDs1307(second, minute, hour, dayOfWeek, dayOfMonth, month, year);
 
   GetTemp();
-  GetPH();
+  //GetPH();
   BuzzerLiga();
 }
 
@@ -175,7 +175,7 @@ void loop() {
   if (second < 2)
   {
     GetTemp();
-    GetPH();
+   // GetPH();
   }
   WebServer();
   ModoAuto();
@@ -627,13 +627,13 @@ void ModoAuto() {
 
     ValueLastFeed = EEPROM.read(MemLastFeed);
     //Alimentação Agendada 1
-    if (ValueFEEDHr1 == hour && ValueLastFeed != hour)
+    if (ValueFEEDHr1 == hour && ValueLastFeed != hour && ValueFEEDHr1 != 0)
     {
       Alimenta();
       EEPROM.write(MemLastFeed, hour);
     }
     //Alimentação Agendada 2
-    if (ValueFEEDHr2 == hour && ValueLastFeed != hour)
+    if (ValueFEEDHr2 == hour && ValueLastFeed != hour && ValueFEEDHr2 != 0)
     {
       Alimenta();
       EEPROM.write(MemLastFeed, hour);
