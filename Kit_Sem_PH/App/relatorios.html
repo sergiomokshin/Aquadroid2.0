@@ -1,0 +1,72 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Automação Livre">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <script language="javascript" type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/gauge.js"></script>
+    <script language="javascript" type="text/javascript" src="js/jquery.jqplot.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/jqplot.dateAxisRenderer.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/jquery.jqplot.min.css" />
+    <script language="javascript" type="text/javascript" src="scripts/aquadroid.js"></script>
+
+    <style>
+        .divReport
+        {
+            height: 300px;
+            width: 500px;
+            position: absolute;
+            left: 10px;            
+        }
+    </style>
+
+    <script>
+
+        $(document).ready(function () {
+
+         //   MostraRelatorios();
+        });
+
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <!--
+        <p class="lead">
+            <a href="painel.html">
+                <img src="Images/aquadroid.png"></a>  Relatórios Aquadroid
+        </p>
+        <table class="table table-bordered">
+            <tr>
+                <td width="120px">Tipo: </td>
+                <td colspan="2">
+                    <label class="radio-inline">
+                        <input type="radio" name="rdModo" id="rdModoA" value="A" onclick="EnviarComando('AUTOL')">
+                        Temperatura						
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="rdModo" id="rdModoM" value="M" onclick="EnviarComando('AUTOD')">
+                        PH				
+                    </label>                    
+                </td>
+            <tr>           
+        </table>
+		-->
+        <table class="table table-bordered">
+            <tr>
+                <th width="120px"></th>
+            </tr>
+
+        </table>
+        <div class="divReport" style="top: 10px;" id="divTemperatura"></div>
+        <div class="divReport" style="top: 320px;" id="divPH"></div>
+    </div>
+</body>
+<html>
+

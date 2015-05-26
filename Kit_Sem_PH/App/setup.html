@@ -1,0 +1,313 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Automação Livre">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="Scripts/aquadroid.js"></script>
+	<link rel="stylesheet" href="css/aquadroid.css">
+	
+    <style>
+
+        table {
+            background-color: #FFFFFF;
+        }
+
+        th {
+            background-color: #3E4551;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row titleAqua">
+            <div class="col-xs-9"><img src="img/logo.png"></div>
+            <div class="col-xs-3"><a href="painel.html"><img src="img/Painel.png" width="140"></a></div>
+        </div>
+        <div class="row">
+            <table class="table table-bordered">
+                <tr>
+                    <th width="120px">Modo: </th>
+                    <th colspan="2">
+                        <label class="radio-inline">
+                            <input type="radio" name="rdModo" id="rdModoA" value="A" onclick="EnviarComando('AUTOL')">
+                            Automatico
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="rdModo" id="rdModoM" value="M" onclick="EnviarComando('AUTOD')">
+                            Manual
+                        </label>
+                        <img src="img/icoLoading.gif" id="icoExeAUTOL">
+                        <img src="img/icoLoading.gif" id="icoExeAUTOD">
+                    </th>
+                <tr>
+                <tr>
+                    <td>Data: </td>
+                    <td width="170px"><span id="DataHW"></span></td>
+                    <td>
+                        <button type="button" class="btn btn-info" aria-label="Left Align" id="btHorarioArduino" onclick="MostraPopUpHorarioArduino()">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Temperatura: </td>
+                    <td colspan="2"><span id="Temperatura"></span></td>
+                </tr>
+				<!--
+                <tr>
+                    <td>PH: </td>
+                    <td colspan="2"><span id="PH"></span></td>
+                </tr>				
+                <tr>
+                    <td>Nivel Baixo: </td>
+                    <td colspan="2"><span id="NivelBaixo"></span></td>
+                </tr>
+                <tr>
+                    <td>Nivel Alto: </td>
+                    <td colspan="2"><span id="NivelAlto"></span></td>
+                </tr>
+				-->
+            </table>
+            <table class="table table-bordered">
+                <tr>
+                    <th width="120px">Função</th>
+                    <th>Ação</th>
+                    <th colspan="2">Agendamento</th>
+                </tr>
+                <tr>
+                    <td>Saida 1</td>
+                    <td width="150px">
+                        <button type="button" id="S1" class="btn" onclick="EnviarComandoSaida('S1')">Ligar</button>
+                        <img src="img/icoLoading.gif" id="icoExecS1">
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td>Saida 2</td>
+                    <td>
+                        <button type="button" id="S2" class="btn" onclick="EnviarComandoSaida('S2')">Ligar</button>
+                        <img src="img/icoLoading.gif" id="icoExecS2">
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td>Saida 3</td>
+                    <td>
+                        <button type="button" id="S3" class="btn btn-danger" onclick="EnviarComandoSaida('S3')">Ligar</button>
+                        <img src="img/icoLoading.gif" id="icoExecS3">
+                    </td>
+                    <td width="50px">
+                        <button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeS3" onclick="MostraPopUpPeriodo('S3')">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                    <td>
+                        <span id="AgeS3"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Saida 4</td>
+                    <td>
+                        <button type="button" id="S4" class="btn" onclick="EnviarComandoSaida('S4')">Ligar</button>
+                        <img src="img/icoLoading.gif" id="icoExecS4">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeS4" onclick="MostraPopUpPeriodo('S4')">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                    <td>
+                        <span id="AgeS4"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>RGB White</td>
+                    <td>
+                        <button type="button" id="WHI" class="btn" onclick="EnviarComandoRGB('WHI')">Ligar</button>
+                        <img src="img/icoLoading.gif" id="icoExecWHI">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeWHI" onclick="MostraPopUpPeriodo('WHI')">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                    <td>
+                        <span id="AgeRGBWHITE"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>RGB Blue</td>
+                    <td>
+                        <button type="button" id="BLU" class="btn" onclick="EnviarComandoRGB('BLU')">Ligar</button>
+                        <img src="img/icoLoading.gif" id="icoExecBLU">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeBLU" onclick="MostraPopUpPeriodo('BLU')">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                    <td>
+                        <span id="AgeRGBBLUE"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>RGB Green</td>
+                    <td>
+                        <button type="button" id="GRE" class="btn" onclick="EnviarComandoRGB('GRE')">Ligar</button>
+                        <img src="img/icoLoading.gif" id="icoExecGRE">
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td>RGB RED</td>
+                    <td>
+                        <button type="button" id="RED" class="btn" onclick="EnviarComandoRGB('RED')">Ligar</button>
+                        <img src="img/icoLoading.gif" id="icoExecRED">
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td>Alimentacao 1</td>
+                    <td>
+                        <button type="button" id="Alimenta1" class="btn btn-warning" onclick="EnviarComando('FEE1')">Alimentar</button>
+                        <img src="img/icoLoading.gif" id="icoExecFEE1">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeFEE1" onclick="MostraPopUpHorario('FEE1')">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                    <td>
+                        <span id="AgeFeed1"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Alimentacao 2</td>
+                    <td>
+                        <button type="button" id="Alimenta2" class="btn btn-warning" onclick="EnviarComando('FEE2')">Alimentar</button>
+                        <img src="img/icoLoading.gif" id="icoExecFEE2">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-info" aria-label="Left Align" id="btAgeFEE2" onclick="MostraPopUpHorario('FEE2')">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                    <td>
+                        <span id="AgeFeed2"></span>
+                    </td>
+                </tr>
+				<!--
+                <tr>
+                    <td>PH</td>
+                    <td colspan="3">
+                        <button type="button" id="PH4" class="btn btn-info" onclick="EnviarComando('PHC')">Calibrar</button>
+                        <img src="img/icoLoading.gif" id="icoExecPHC">
+                    </td>
+                </tr>
+				-->
+            </table>
+        </div>
+        <div class="modal fade" id="modalHorarioArduino" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modalHorarioArduinoTitle"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="DataArduino">Data</label>
+                                <input type="text" class="form-control" id="DataArduino">
+                            </div>
+                            <div class="form-group">
+                                <label for="HoraArduino">Hora</label>
+                                <input type="time" class="form-control" id="HoraArduino">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" onclick="AlterarHorarioArduino()">Alterar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalPeriodo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modalPeriodoTitle"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="hrInicio">Horário</label>
+                                <input type="number" class="form-control" id="hrInicio" min="0" max="23" step="1">
+                                <label for="hrInicio2">:00</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="hrFim">Até</label>
+                                <input type="number" class="form-control" id="hrFim" min="0" max="23" step="1">
+                                <label for="hrFim2">:59</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" onclick="AlterarPeriodo()">Alterar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalHorario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modalHorarioTitle"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="hrHorario">Horário</label>
+                                <input type="number" class="form-control" id="hrHorario" min="0" max="23" step="1">
+                                <label for="hrInicio2">:00</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" onclick="AlterarHorario()">Alterar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    $(document).ready(function () {
+        console.log("Page Ready!");
+        $('#icoExeAUTOL').hide();
+       // CriaBancoRelatorio();
+        BuscaDados();
+
+
+        setInterval(function () {
+            BuscaDados();
+        }, 5000);
+
+    });
+
+
+</script>
+<html>
