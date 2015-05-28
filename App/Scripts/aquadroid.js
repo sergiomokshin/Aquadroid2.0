@@ -1,4 +1,4 @@
-//var ipArduino = 'http://186.220.99.147:8099';
+
 var ipArduino = 'http://192.168.0.201';
 
 var dadosRecebidos;
@@ -75,7 +75,7 @@ function BindData(data) {
         $("#NivelBaixo").text("OK");
     }
     else {
-        $("#NivelBaixo").text("Fora de nÌvel");
+        $("#NivelBaixo").text("Fora de n√≠vel");
     }
 
     console.log(data.NivelAlto);
@@ -83,7 +83,7 @@ function BindData(data) {
         $("#NivelAlto").text("OK");
     }
     else {
-        $("#NivelAlto").text("Fora de nÌvel");
+        $("#NivelAlto").text("Fora de n√≠vel");
     }
 
     if (data.S1 == 1) {
@@ -233,7 +233,7 @@ function Enviar(comando) {
             console.log("Comando enviado com sucesso!");
 
             if (comando == "?AUTOL" || comando == "?AUTOD") {
-                //Rebind para busca de dados apÛs ativaÁ„o de modo
+                //Rebind para busca de dados ap√≥s ativa√ß√£o de modo
                 console.log("Buscando novamente dados do modo Automatico")
                 $('#icoExeAUTOL').show();
                 BuscaDados();
@@ -242,7 +242,7 @@ function Enviar(comando) {
 }
 
 function HabilitaModo(Modo) {
-    if (Modo == 1) // automatico, desabilitar funcoes de agendamento com faixa de hor·rio
+    if (Modo == 1) // automatico, desabilitar funcoes de agendamento com faixa de hor√°rio
     {
         $('#S1').prop('disabled', true);
         $('#S2').prop('disabled', true);
@@ -378,7 +378,7 @@ function CriaBancoRelatorio() {
 
         var db = openDatabase('AquadroidReport', '1.0', 'Banco Aquadroid', 2 * 1024 * 1024);
         if (!db) {
-            alert('Seu browser n„o suporta WebSql Database !');
+            alert('Seu browser n√£o suporta WebSql Database !');
         }
         else {
             db.transaction(function (tx) {
@@ -388,7 +388,7 @@ function CriaBancoRelatorio() {
         }
     }
     else {
-        alert('Seu browser n„o suporta WebSql Database !');
+        alert('Seu browser n√£o suporta WebSql Database !');
     }
 
 }
@@ -469,7 +469,7 @@ function MostraRelatorios() {
 
     var db = openDatabase('AquadroidReport', '1.0', 'Banco Aquadroid', 2 * 1024 * 1024);
     if (!db) {
-        alert('Seu browser n„o suporta WebSql Database !');
+        alert('Seu browser n√£o suporta WebSql Database !');
     }
     else {
         db.transaction(function (transaction) {
