@@ -1,3 +1,4 @@
+
 /*
 Sergio Mokshin
 Automação Live - Jan /2015
@@ -9,6 +10,7 @@ Automação Live - Jan /2015
 #include <avr/wdt.h>
 #include "Wire.h"
 #include <OneWire.h> // Importar biblioteca
+#include <Servo.h>
 
 OneWire ds(2);  // pin 10 (with 4.7K resistor)
 #define DS1307_I2C_ADDRESS 0x68
