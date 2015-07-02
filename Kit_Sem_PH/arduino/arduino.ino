@@ -559,24 +559,20 @@ void ModoAuto() {
     if (ValueSaida3HrI <= hour && ValueSaida3HrF >= hour)
     {
       digitalWrite(A1, HIGH);
-      EEPROM.write(MemSaida3, 1);
     }
     else
     {
       digitalWrite(A1, LOW);
-      EEPROM.write(MemSaida3, 0);
     }
 
     //Saida 4
     if (ValueSaida4HrI <= hour && ValueSaida4HrF >= hour)
     {
       digitalWrite(A0, HIGH);
-      EEPROM.write(MemSaida4, 1);
     }
     else
     {
       digitalWrite(A0, LOW);
-      EEPROM.write(MemSaida4, 0);
     }
 
     //RGB
@@ -587,10 +583,7 @@ void ModoAuto() {
       ValueBlue = 255;
       analogWrite(PIN_RED, ValueRed);
       analogWrite(PIN_GREEN, ValueGreen);
-      analogWrite(PIN_BLUE, ValueBlue);
-      EEPROM.write(MemRed, ValueRed);
-      EEPROM.write(MemGreen, ValueGreen);
-      EEPROM.write(MemBlue, ValueBlue);
+      analogWrite(PIN_BLUE, ValueBlue);      
     }
     else if (ValueRGBBLUEHrI <= hour && ValueRGBBLUEHrF >= hour)
     {
@@ -608,10 +601,6 @@ void ModoAuto() {
       analogWrite(PIN_RED, ValueRed);
       analogWrite(PIN_GREEN, ValueGreen);
       analogWrite(PIN_BLUE, ValueBlue);
-      EEPROM.write(MemRed, ValueRed);
-      EEPROM.write(MemGreen, ValueGreen);
-      EEPROM.write(MemBlue, ValueBlue);
-
     }
     else
     {
@@ -620,23 +609,21 @@ void ModoAuto() {
       ValueBlue = 0;
       analogWrite(PIN_RED, ValueRed);
       analogWrite(PIN_GREEN, ValueGreen);
-      analogWrite(PIN_BLUE, ValueBlue);
-      EEPROM.write(MemRed, ValueRed);
-      EEPROM.write(MemGreen, ValueGreen);
-      EEPROM.write(MemBlue, ValueBlue);
+      analogWrite(PIN_BLUE, ValueBlue);      
     }
-
-    ValueLastFeed = EEPROM.read(MemLastFeed);
+    
     //Alimentação Agendada 1
     if (ValueFEEDHr1 == hour && ValueLastFeed != hour && ValueFEEDHr1 != 0)
     {
       Alimenta();
+	  ValueLastFeed = hour;
       EEPROM.write(MemLastFeed, hour);
     }
     //Alimentação Agendada 2
     if (ValueFEEDHr2 == hour && ValueLastFeed != hour && ValueFEEDHr2 != 0)
     {
       Alimenta();
+	  ValueLastFeed = hour;
       EEPROM.write(MemLastFeed, hour);
     }
   }
