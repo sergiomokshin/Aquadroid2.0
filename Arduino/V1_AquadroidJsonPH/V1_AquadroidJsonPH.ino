@@ -558,24 +558,20 @@ void ModoAuto() {
     if (ValueSaida3HrI <= hour && ValueSaida3HrF >= hour)
     {
       digitalWrite(A1, HIGH);
-      EEPROM.write(MemSaida3, 1);
     }
     else
     {
       digitalWrite(A1, LOW);
-      EEPROM.write(MemSaida3, 0);
     }
 
     //Saida 4
     if (ValueSaida4HrI <= hour && ValueSaida4HrF >= hour)
     {
       digitalWrite(A0, HIGH);
-      EEPROM.write(MemSaida4, 1);
     }
     else
     {
       digitalWrite(A0, LOW);
-      EEPROM.write(MemSaida4, 0);
     }
 
     //RGB
@@ -586,10 +582,7 @@ void ModoAuto() {
       ValueBlue = 255;
       analogWrite(PIN_RED, ValueRed);
       analogWrite(PIN_GREEN, ValueGreen);
-      analogWrite(PIN_BLUE, ValueBlue);
-      EEPROM.write(MemRed, ValueRed);
-      EEPROM.write(MemGreen, ValueGreen);
-      EEPROM.write(MemBlue, ValueBlue);
+      analogWrite(PIN_BLUE, ValueBlue);      
     }
     else if (ValueRGBBLUEHrI <= hour && ValueRGBBLUEHrF >= hour)
     {
@@ -606,11 +599,7 @@ void ModoAuto() {
 
       analogWrite(PIN_RED, ValueRed);
       analogWrite(PIN_GREEN, ValueGreen);
-      analogWrite(PIN_BLUE, ValueBlue);
-      EEPROM.write(MemRed, ValueRed);
-      EEPROM.write(MemGreen, ValueGreen);
-      EEPROM.write(MemBlue, ValueBlue);
-
+      analogWrite(PIN_BLUE, ValueBlue);      
     }
     else
     {
@@ -619,10 +608,7 @@ void ModoAuto() {
       ValueBlue = 0;
       analogWrite(PIN_RED, ValueRed);
       analogWrite(PIN_GREEN, ValueGreen);
-      analogWrite(PIN_BLUE, ValueBlue);
-      EEPROM.write(MemRed, ValueRed);
-      EEPROM.write(MemGreen, ValueGreen);
-      EEPROM.write(MemBlue, ValueBlue);
+      analogWrite(PIN_BLUE, ValueBlue);     
     }
 
     ValueLastFeed = EEPROM.read(MemLastFeed);
