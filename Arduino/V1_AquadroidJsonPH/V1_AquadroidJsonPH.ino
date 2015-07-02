@@ -610,19 +610,20 @@ void ModoAuto() {
       analogWrite(PIN_GREEN, ValueGreen);
       analogWrite(PIN_BLUE, ValueBlue);     
     }
-
-    ValueLastFeed = EEPROM.read(MemLastFeed);
+    
     //Alimentação Agendada 1
     if (ValueFEEDHr1 == hour && ValueLastFeed != hour && ValueFEEDHr1 != 0)
     {
       Alimenta();
       EEPROM.write(MemLastFeed, hour);
+	  ValueLastFeed = hour;
     }
     //Alimentação Agendada 2
     if (ValueFEEDHr2 == hour && ValueLastFeed != hour && ValueFEEDHr2 != 0)
     {
       Alimenta();
       EEPROM.write(MemLastFeed, hour);
+	  ValueLastFeed = hour;
     }
   }
 }
