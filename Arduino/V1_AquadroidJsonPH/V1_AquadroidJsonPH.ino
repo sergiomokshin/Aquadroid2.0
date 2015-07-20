@@ -106,16 +106,16 @@ void setup() {
   EEPROM.write(MemSaida3, 0);
   EEPROM.write(MemSaida4, 0);
   EEPROM.write(MemAuto, 1);
-  EEPROM.write(MemSaida3HrI, 9); //-> Saida 3 (Luz Fluorecente) liga 9:00
-  EEPROM.write(MemSaida3HrF, 16); //-> Saida 3 (Luz Fluorecente) desliga 16:00
+  EEPROM.write(MemSaida3HrI, 7); //-> Saida 3 (Luz Fluorecente) liga 9:00
+  EEPROM.write(MemSaida3HrF, 11); //-> Saida 3 (Luz Fluorecente) desliga 16:00
   EEPROM.write(MemSaida4HrI, 0);
   EEPROM.write(MemSaida4HrF, 0);
-  EEPROM.write(MemRGBWHITEHrI, 17); //-> RGB Branco liga 17:00
-  EEPROM.write(MemRGBWHITEHrF, 18); //-> RGB Branco desliga 18:00
-  EEPROM.write(MemRGBBLUEHrI, 19); //-> RGB Azul liga 19:00
-  EEPROM.write(MemRGBBLUEHrF, 22);//-> RGB Azul desliga 22:00
-  EEPROM.write(MemFEEDHr1, 10);//-> Primeira alimentação 10:00
-  EEPROM.write(MemFEEDHr2, 19);//-> Segunda alimentação 19:00
+  EEPROM.write(MemRGBWHITEHrI, 12); //-> RGB Branco liga 17:00
+  EEPROM.write(MemRGBWHITEHrF, 17); //-> RGB Branco desliga 18:00
+  EEPROM.write(MemRGBBLUEHrI, 18); //-> RGB Azul liga 19:00
+  EEPROM.write(MemRGBBLUEHrF, 21);//-> RGB Azul desliga 22:00
+  EEPROM.write(MemFEEDHr1, 7);//-> Primeira alimentação 10:00
+  EEPROM.write(MemFEEDHr2, 18);//-> Segunda alimentação 19:00
   EEPROM.write(MemRed, 0);//-> Segunda alimentação 19:00
   EEPROM.write(MemGreen, 0);//-> Segunda alimentação 19:00
   EEPROM.write(MemBlue, 0);//-> Segunda alimentação 19:00
@@ -157,11 +157,11 @@ void setup() {
 
   //Setup inicial do horario do DS1307
   second = 00;
-  minute = 8;
-  hour = 21;
+  minute = 30;
+  hour = 10;
   dayOfWeek = 1;
-  dayOfMonth = 5;
-  month = 2;
+  dayOfMonth =19;
+  month = 7;
   year = 15;
   // setDateDs1307(second, minute, hour, dayOfWeek, dayOfMonth, month, year);
 
